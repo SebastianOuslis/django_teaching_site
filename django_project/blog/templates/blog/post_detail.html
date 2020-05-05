@@ -1,0 +1,40 @@
+{% extends "blog/base.html" %}
+{% block content%}
+    <article class="media content-section">
+      <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}">
+      <div class="media-body">
+        <div class="article-metadata">
+          <a class="mr-2" href="{% url 'user-posts' object.author.username %}">{{ object.author_profile.first_name|upper }} {{ object.author_profile.last_name|upper }}</a>
+          <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
+          {% if object.author == user %}
+            <div>
+              <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
+              <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Delete</a>
+            </div>
+          {% endif %}
+        </div>
+        <h2 class="article-title">{{ object.title }}</h2>
+        <h2><a class="article-title" href="{% url 'post-category' post.category %}"><font size="-1">{{ object.category }}</font></a></h2>
+        {% if object.is_purchase %}
+          <h2>Buy for <strong>${{ object.cost }}</strong>!</h2>
+          {% if user.is_authenticated %}
+            {% if object.author != user %}
+              <form action="{% url 'payments-charge' object.author.username object.id %}" method="post">
+                {% csrf_token %}
+                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                    data-key="{{ key }}"
+                    data-description="{{ stripe_description }}"
+                    data-amount="{{ stripe_charge }}"
+                    data-locale="{{ stripe_locale }}">
+                </script>
+              </form>
+            {% endif %}
+          {% else %}
+            <a class="mr-2" href="{% url 'login' %}?next={{request.path}}">Login to Purchase</a>
+          {% endif %}
+        {% endif %}
+        <br>
+        <p class="article-content"><br>{{ object.content }}</p>
+      </div>
+    </article>
+{% endblock content %}

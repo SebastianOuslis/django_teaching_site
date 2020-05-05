@@ -1,0 +1,22 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content%}
+    <h2>Payments Home Page</h2>
+    <h2>Buy for $5.00</h2>
+    <h2>Buy for <strong>${{ stripe_charge_dollars }}.{{ stripe_charge_cents }}</strong>!</h2>
+    <form action="{% url 'payments-charge' stripe_description stripe_charge %}" method="post">
+        {% csrf_token %}
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="{{ key }}"
+            data-description="{{ stripe_description }}"
+            data-amount="{{ stripe_charge }}"
+            data-locale="{{ stripe_locale }}">
+        </script>
+    </form>
+
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            <a class="ml-2" href="{% url 'login' %}">Login Page</a>
+        </small>
+    </div>
+{% endblock %}

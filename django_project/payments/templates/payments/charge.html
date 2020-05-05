@@ -1,0 +1,10 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content%}
+    <h2>Thanks, you paid <strong>${{ stripe_charge_dollars }}.{{ stripe_charge_cents }}</strong>!</h2>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            <a class="ml-2" href="{% url 'login' %}">Login Page</a>
+        </small>
+    </div>
+{% endblock %}
