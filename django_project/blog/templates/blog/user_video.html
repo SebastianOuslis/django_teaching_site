@@ -36,9 +36,11 @@
 page_user_username="{{ page_user.username }}" user_username="{{ user.username }}"
 {% endblock data_in_body %}
 {% block video_call%}
-  <div class="media-body">
+  <div class="container">
+    <div class="row h-100">
       <video id="localVideo" autoplay muted></video>
       <video id="remoteVideo" autoplay></video>
+    </div>
   </div>
   <script>
     var page_user_username = "{{ page_user.username }}";
