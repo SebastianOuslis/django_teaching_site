@@ -19,12 +19,14 @@ from django.urls import path, include
 from users import views as user_views
 from users.views import UserSalesListView
 from payments import views as payment_views
+from blog.views import home
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.decorators import login_required
 
 
 urlpatterns = [
+    path('', home, name="home"),
     path('admin/', admin.site.urls),
     path('blog/', include('blog.urls')),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
