@@ -15,14 +15,18 @@
         <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'user-posts' page_user.username %}">{{ page_user.username }} posts</a>
         {% if user.is_authenticated %}
             <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'create-review' page_user.username %}">Write a review for this Instructor</a>
+        {% else %}
+            <a class="mr-2" href="{% url 'login' %}?next={{request.path}}">Login to Review this User</a>
         {% endif %}
         {% if user.is_authenticated %}
             <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'video-call' page_user.username %}">Video Call this User</a>
+        {% else %}
+            <a class="mr-2" href="{% url 'login' %}?next={{request.path}}">Login to Video Call this User</a>
         {% endif %}
         {% if user.is_authenticated %}
             <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'text-chat' page_user.username %}">Text Chat with this User</a>
         {% else %}
-            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'login' %}?next={{request.path}}">Login to Connect With This User</a>
+            <a class="mr-2" href="{% url 'login' %}?next={{request.path}}">Login to Text Chat with this User</a>
         {% endif %}
     </div>
     <h1 class="mb-3">Reviews of {{ page_user.profile.first_name|upper }} {{ page_user.profile.last_name|upper }} ({{ page_obj.paginator.count}})</h1>

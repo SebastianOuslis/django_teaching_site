@@ -8,7 +8,7 @@ class Profile(models.Model):
     last_name = models.CharField(max_length=20, default='Green')
     instagram_handle = models.TextField(default='')
     youtube_channel = models.TextField(default='')
-    image = models.ImageField(default='default.PNG', upload_to='profile_pics')
+    image = models.ImageField(default='default_logo.PNG', upload_to='profile_pics')
     short_description = models.CharField(max_length=100, default='Add a short description of yourself')
     description = models.TextField(default='Add a description of your Skills and what you can offer as classes')
 

@@ -4,8 +4,12 @@
       <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}">
       <div class="media-body">
         <div class="article-metadata">
-          <a class="mr-2" href="{% url 'user-posts' object.author.username %}">{{ object.author_profile.first_name|upper }} {{ object.author_profile.last_name|upper }}</a>
-          <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
+          <a class="mr-2 userlink" href="{% url 'user-posts' object.author.username %}">{{ object.author_profile.first_name }} {{ object.author_profile.last_name }}</a>
+          <a class="spacing">Category:</a>
+            <a class="post-category" href="{% url 'post-category' object.category %}">{{ object.category }}</a>
+            <div class="spacing">
+              <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
+            </div>
           {% if object.author == user %}
             <div>
               <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
@@ -14,7 +18,7 @@
           {% endif %}
         </div>
         <h2 class="article-title">{{ object.title }}</h2>
-        <h2><a class="article-title" href="{% url 'post-category' post.category %}"><font size="-1">{{ object.category }}</font></a></h2>
+        
         {% if object.is_purchase %}
           <h2>Buy for <strong>${{ object.cost }}</strong>!</h2>
           {% if user.is_authenticated %}

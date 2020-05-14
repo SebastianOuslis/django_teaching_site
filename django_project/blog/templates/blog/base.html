@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,9 +11,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <!-- Font Awesome CSS -->
-    <link rel="stylesheet" href="{% static 'css/all.min.css'%}">
+    <!-- <link rel="stylesheet" href="{% static 'css/all.min.css'%}"> -->
 
-    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css'%}">
+    <script  src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" data-auto-a11y="true"></script>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css'%}?{% now 'U' %}/">
+
     {% if title %}
         <title>Django Blog - {{ title }}</title>
     {% else %}
@@ -25,12 +29,25 @@
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container">
-          <a class="navbar-brand mr-4" href="{% url 'blog-home' %}">Django Blog</a>
+          <!-- <a class="navbar-brand mr-4" href="{% url 'blog-home' %}">Django Blog</a> -->
+
+          <a class="navbar-brand mr-4" href="{% url 'blog-home' %}"><img class="logoformat" src="{% static 'logoimg/logo2.png' %}"></a>
+
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
-            <div class="navbar-nav mr-auto">
+
+            <div class="search-container">
+              <form class="form-inline">
+                <i class="fas fa-search" aria-hidden="true"></i>
+                <input class="form-control form-control-sm ml-3 w-75"type="text" placeholder="Search Classes..." 
+                aria-label="Search">
+              </form>
+            </div>
+
+
+            <div class="navbar-nav ml-auto">
               <a class="nav-item nav-link" href="{% url 'blog-home' %}">Home</a>
               <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
             </div>
@@ -57,7 +74,7 @@
           {% block chat %}{% endblock chat %}
       </div>
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
             {% if messages %}
                 {% for message in messages %}
                     <div class="alert alert-{{ message.tags }}">

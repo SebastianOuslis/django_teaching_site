@@ -21,7 +21,22 @@
   <component name="ChangeListManager">
     <list default="true" id="708304ce-202a-47a7-90dd-97f8b5275e00" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/django_project/django_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/django_project/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_project/blog/static/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/blog/static/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_project/blog/static/js/text_chat.js" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/blog/static/js/text_chat.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_project/blog/templates/blog/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/blog/templates/blog/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_project/blog/templates/blog/category_posts.html" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/blog/templates/blog/category_posts.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_project/blog/templates/blog/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/blog/templates/blog/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_project/blog/templates/blog/post_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/blog/templates/blog/post_detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_project/blog/templates/blog/user_chat.html" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/blog/templates/blog/user_chat.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_project/blog/templates/blog/user_posts.html" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/blog/templates/blog/user_posts.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_project/blog/templates/blog/user_reviews.html" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/blog/templates/blog/user_reviews.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_project/blog/templates/blog/user_video.html" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/blog/templates/blog/user_video.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_project/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_project/media/default.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_project/static/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/static/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_project/users/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/users/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_project/users/templates/users/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/users/templates/users/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_project/users/templates/users/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/users/templates/users/profile.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +59,9 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/django_project" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Sebastian\Documents\GitHub\django_teaching_site\django_project\media" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Sebastian\Documents\GitHub\django_teaching_site\django_project" />
     </key>
