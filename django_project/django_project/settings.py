@@ -26,7 +26,7 @@ SECRET_KEY = 'iip4i1=s!59huodyb2do@fhji3ch*=65n%@dr1dq065yf38#0z'
 #DEBUG = False
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 #ALLOWED_HOSTS = ['nxtklass-env.eba-3pefeg3f.us-east-2.elasticbeanstalk.com']
 
 # Application definition
