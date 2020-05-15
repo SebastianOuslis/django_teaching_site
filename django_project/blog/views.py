@@ -130,7 +130,7 @@ class UserReviewList(ListView):
 class ReviewCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Review
     fields = ['user_rating_out_of_five', 'review_text']
-    template_name = 'blog/user_create_reviews.html'
+    template_name = 'blog/user_create_review.html'
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
