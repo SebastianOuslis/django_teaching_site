@@ -20,7 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="708304ce-202a-47a7-90dd-97f8b5275e00" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/django_project/django_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/django_project/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_project/blog/static/logoimg/logo2.PNG" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/blog/static/logoimg/logo2.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,14 +40,16 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/django_project" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/django_project/blog/static/logoimg" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Sebastian\Documents\GitHub\django_teaching_site\django_project\blog\static\logoimg" />
+      <recent name="C:\Users\Sebastian\Documents\GitHub\django_teaching_site\django_project\static\logoimg" />
+      <recent name="C:\Users\Sebastian\Documents\GitHub\django_teaching_site\django_project" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Sebastian\Documents\GitHub\django_teaching_site\django_project\media" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Sebastian\Documents\GitHub\django_teaching_site\django_project" />
     </key>
   </component>
   <component name="SvnConfiguration">
