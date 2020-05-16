@@ -10,7 +10,7 @@
       <div class="media">
         <img class="rounded-circle account-img" src="{{ user.profile.image.url}}">
         <div class="media-body">
-          <h2 class="account-heading">{{ user.profile.first_name }} {{ user.profile.last_name}}</h2>
+          <h2 class="account-heading">{{ user.profile.full_name }}</h2>
           <h2 class="account-heading">{{ user.profile.short_description }}</h2>
           {% if user.profile.instagram_handle != "" or user.profile.youtube_channel != "" %}
             <p class="text-secondary">
@@ -25,6 +25,10 @@
 
           <p class="text-secondary">Email: {{ user.email }} Username: {{ user.username }}</p>
           <p class="article-content">{{ user.profile.description }}</p>
+          {% if user.profile.youtube_short_link != "" %}
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{user.profile.youtube_short_link}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+            </iframe>
+          {% endif %}
         </div>
       </div>
     </div>

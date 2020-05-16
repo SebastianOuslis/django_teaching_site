@@ -9,7 +9,7 @@
     {% for sale in sales %}
         <article class="media content-section">
           <div class="media-body">
-              <p class="article-content">{{ sale.user_bought_by.username }} bought post "{{ sale.post_bought_from.title }}" for {{ sale.dollars_string }}.{{ sale.cents_string }}$ {{ sale.currency|upper }} on {{ sale.date_bought }}</p>
+              <p class="article-content">{{ sale.user_bought_by_username }} bought post "{{ sale.post_bought_from_title }}" for {{ sale.dollars_string }}.{{ sale.cents_string }}$ {{ sale.currency|upper }} on {{ sale.date_bought }}</p>
           </div>
         </article>
     {% endfor %}

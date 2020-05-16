@@ -10,7 +10,7 @@ function randomEmoji() {
 }
 
 const emoji = randomEmoji();
-const name = prompt("What's your name?");
+const name = user_name;
 
 console.log(page_user_username);
 console.log(user_username);

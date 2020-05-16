@@ -7,7 +7,7 @@
           <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2 userlink" href="{% url 'user-posts' post.author.username %}">{{ post.author_profile.first_name }} {{ post.author_profile.last_name }}</a>
+              <a class="mr-2 userlink" href="{% url 'user-posts' post.author.username %}">{{ post.author_profile.full_name }}</a>
               <a class="spacing">Category: </a>
               <a class="post-category" href="{% url 'post-category' post.category %}">{{ post.category }}</a>
               <div class="spacing">

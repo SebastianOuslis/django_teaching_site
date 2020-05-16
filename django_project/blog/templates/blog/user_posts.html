@@ -4,7 +4,7 @@
       <div class="media">
         <img class="rounded-circle account-img" src="{{ page_user.profile.image.url}}">
         <div class="media-body">
-          <h2 class="account-heading">{{ page_user.profile.first_name }} {{ page_user.profile.last_name}}</h2>
+          <h2 class="account-heading">{{ page_user.profile.full_name }}</h2>
           <h2 class="account-heading">{{ page_user.profile.short_description }}</h2>
           {% if page_user.profile.instagram_handle != "" or page_user.profile.youtube_channel != "" %}
             <p class="text-secondary">
@@ -19,6 +19,10 @@
 
           <p class="text-secondary">Email: {{ page_user.email }} Username: {{ page_user.username }}</p>
           <p class="article-content">{{ page_user.profile.description }}</p>
+          {% if page_user.profile.youtube_short_link != "" %}
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{page_user.profile.youtube_short_link}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+            </iframe>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -40,13 +44,13 @@
             <a class="mr-2" href="{% url 'login' %}?next={{request.path}}">Login to Text Chat with this User</a>
         {% endif %}
     </div>
-    <h1 class="mb-3">Posts by {{ page_user.profile.first_name }} {{ page_user.profile.last_name }} ({{ page_obj.paginator.count}})</h1>
+    <h1 class="mb-3">Posts by {{ page_user.profile.full_name }} ({{ page_obj.paginator.count}})</h1>
     {% for post in posts %}
         <article class="media content-section">
           <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2 userlink" href="{% url 'user-posts' post.author.username %}">{{ post.author_profile.first_name }} {{ post.author_profile.last_name }}</a>
+              <a class="mr-2 userlink" href="{% url 'user-posts' post.author.username %}">{{ post.author_profile.full_name }}</a>
               <a class="spacing">Category: </a>
               <a class="post-category" href="{% url 'post-category' post.category %}">{{ post.category }}</a>
               <div class="spacing">

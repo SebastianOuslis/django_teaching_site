@@ -1,21 +1,29 @@
 from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
+from django.core.validators import RegexValidator
+import re
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=20, default='Alex')
-    last_name = models.CharField(max_length=20, default='Green')
+    full_name = models.CharField(max_length=40, default='First Last')
     instagram_handle = models.TextField(default='')
     youtube_channel = models.TextField(default='')
     image = models.ImageField(default='default_logo.PNG', upload_to='profile_pics')
     short_description = models.CharField(max_length=100, default='Add a short description of yourself')
     description = models.TextField(default='Add a description of your Skills and what you can offer as classes')
+    youtube_profile_link = models.TextField(default='')
+    youtube_short_link = models.TextField(default='')
 
     def __str__(self):
         return f'{self.user.username} Profile'
 
     def save(self, *args, **kwargs):
+        youtube_profile_string = self.youtube_profile_link
+        if "youtube" in youtube_profile_string or "youtu" in youtube_profile_string:
+            if "=" in youtube_profile_string:
+                key_for_vid = re.split("=", youtube_profile_string)[1]
+                self.youtube_short_link = key_for_vid
         super().save(*args, **kwargs)
 
         img = Image.open(self.image.path)
