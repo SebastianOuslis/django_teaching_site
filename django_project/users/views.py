@@ -47,10 +47,20 @@ class ProfileUpdateViewInstructor(LoginRequiredMixin, UserPassesTestMixin, Updat
 
     def get_object(self):
         return self.request.user
-    #
-    # def post(self, request, **kwargs):
-    #     messages.success(request, f'Your Profile has been updated!')
-    #     return super(ProfileUpdateViewInstructor, self).post(request, **kwargs)
+
+    def post(self, request, **kwargs):
+        p_form = ProfileUpdateFormInstructor(request.POST, request.FILES, instance=request.user.profile)
+        if p_form.is_valid():
+            p_form.save()
+            messages.success(request, f'Your Profile has been updated!')
+            return redirect('profile')
+        else:
+            messages.warning(request, f'Please try again')
+            return redirect('profile')
+
+
+        messages.success(request, f'Your Profile has been updated!')
+        return super(ProfileUpdateViewInstructor, self).post(request, **kwargs)
 
     def test_func(self):
         list_of_instructors = ListOfInstructors.objects.all()
@@ -66,10 +76,16 @@ class ProfileUpdateViewStudent(LoginRequiredMixin, UserPassesTestMixin, UpdateVi
 
     def get_object(self):
         return self.request.user
-    #
-    # def post(self, request, **kwargs):
-    #     messages.success(request, f'Your Profile has been updated!')
-    #     return super(ProfileUpdateViewStudent, self).post(request, **kwargs)
+
+    def post(self, request, **kwargs):
+        p_form = ProfileUpdateFormStudent(request.POST, instance=request.user.profile)
+        if p_form.is_valid():
+            p_form.save()
+            messages.success(request, f'Your Profile has been updated!')
+            return redirect('profile_student')
+        else:
+            messages.warning(request, f'Please try again')
+            return redirect('profile_student')
 
     def test_func(self):
         list_of_instructors = ListOfInstructors.objects.all()
