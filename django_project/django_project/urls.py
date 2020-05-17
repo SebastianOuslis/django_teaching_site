@@ -41,7 +41,7 @@ urlpatterns = [
          name='password_reset_complete'),
     path('register/', user_views.register, name='register'),
     path('profile/', user_views.ProfileUpdateViewInstructor.as_view(template_name='users/profile.html'), name='profile'),
-    path('profile_student/', user_views.ProfileUpdateViewStudent.as_view(template_name='users/password_reset_complete.html'), name='profile_student'),
+    path('profile_student/', user_views.ProfileUpdateViewStudent.as_view(template_name='users/profile_student.html'), name='profile_student'),
     path('profile/sales', login_required(UserSalesListView.as_view()), name='sales'),
     path('payments/', include('payments.urls'))
 ]

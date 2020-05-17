@@ -6,7 +6,8 @@ from django.views.generic import (
 from django.contrib.auth.models import User
 from .models import Category, Post, Review
 from django.conf import settings
-from users.models import Profile
+from users.models import Profile, ListOfInstructors
+from django.contrib import messages
 
 import stripe
 
@@ -74,13 +75,23 @@ class PostDetailView(DetailView):
     #     print(context)
     #     return context
 
-class PostCreateView(LoginRequiredMixin, CreateView):
+class PostCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Post
     fields = ['title', 'content', 'category', 'is_purchase', 'type_of_class', 'initial_spots', 'cost']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+    def test_func(self):
+        list_of_instructor_usernames = [d['user_username'] for d in list(ListOfInstructors.objects.values('user_username')) if 'user_username' in d]
+        if self.request.user.username in list_of_instructor_usernames:
+            return True
+        messages.warning(self.request, f'You must be an instructor to create a class, please contact us to make you an instructor')
+        return False
+
+    def handle_no_permission(self):
+        return redirect('blog-home')
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post

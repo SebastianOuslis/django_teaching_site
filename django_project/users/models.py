@@ -35,3 +35,8 @@ class Profile(models.Model):
 
 class ListOfInstructors(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_username = models.TextField(default='')
+
+    def save(self, *args, **kwargs):
+        self.user_username = self.user.username
+        super().save(*args, **kwargs)

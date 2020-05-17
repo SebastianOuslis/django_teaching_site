@@ -63,11 +63,13 @@ class ProfileUpdateViewInstructor(LoginRequiredMixin, UserPassesTestMixin, Updat
         return super(ProfileUpdateViewInstructor, self).post(request, **kwargs)
 
     def test_func(self):
-        list_of_instructors = ListOfInstructors.objects.all()
-        print(list_of_instructors)
-        if self.request.user in list_of_instructors:
+        list_of_instructor_usernames = [d['user_username'] for d in list(ListOfInstructors.objects.values('user_username')) if 'user_username' in d]
+        if self.request.user.username in list_of_instructor_usernames:
             return True
-        return redirect("profile_student")
+        return False
+
+    def handle_no_permission(self):
+        return redirect('profile_student')
 
 class ProfileUpdateViewStudent(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Profile
@@ -88,11 +90,13 @@ class ProfileUpdateViewStudent(LoginRequiredMixin, UserPassesTestMixin, UpdateVi
             return redirect('profile_student')
 
     def test_func(self):
-        list_of_instructors = ListOfInstructors.objects.all()
-        print(list_of_instructors)
-        if self.request.user in list_of_instructors:
-            return redirect("profile")
+        list_of_instructor_usernames = [d['user_username'] for d in list(ListOfInstructors.objects.values('user_username')) if 'user_username' in d]
+        if self.request.user.username in list_of_instructor_usernames:
+            return False
         return True
+
+    def handle_no_permission(self):
+        return redirect('profile')
 
 class UserSalesListView(ListView):
     model = Purchases
