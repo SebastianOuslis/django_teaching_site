@@ -17,10 +17,10 @@ class UserUpdateForm(forms.ModelForm):
         model = User
         fields = ['username', 'email']
 
-class ProfileUpdateForm(forms.ModelForm):
+class ProfileUpdateFormInstructor(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['full_name', 'instagram_handle', 'youtube_channel', 'short_description', 'description', 'youtube_profile_link']
+        fields = ['full_name', 'instagram_handle', 'youtube_channel', 'short_description', 'description', 'image', 'youtube_profile_link']
         widgets = {
             'instagram_handle': forms.Textarea(attrs={'rows':1, 'cols':8}),
             'youtube_channel': forms.Textarea(attrs={'rows':1, 'cols':8}),
@@ -28,7 +28,13 @@ class ProfileUpdateForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        super(ProfileUpdateForm, self).__init__(*args, **kwargs)
+        super(ProfileUpdateFormInstructor, self).__init__(*args, **kwargs)
         self.fields['instagram_handle'].required = False
         self.fields['youtube_channel'].required = False
         self.fields['youtube_profile_link'].required = False
+
+class ProfileUpdateFormStudent(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['full_name', 'image']
+

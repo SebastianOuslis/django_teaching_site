@@ -107,6 +107,10 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             return True
         return False
 
+    # def handle_no_permission(self):
+    #     return redirect('users:create-profile')
+    # this is to redirect after no permission, add message " messages.success(request, 'Form submission successful') "
+
 def about(request):
     return render(request, 'blog/about.html', {'title':'About'})
 
