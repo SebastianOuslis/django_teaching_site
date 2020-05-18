@@ -46,21 +46,17 @@ class ProfileUpdateViewInstructor(LoginRequiredMixin, UserPassesTestMixin, Updat
     success_url = reverse_lazy('profile')
 
     def get_object(self):
-        return self.request.user
+        return self.request.user.profile
 
     def post(self, request, **kwargs):
         p_form = ProfileUpdateFormInstructor(request.POST, request.FILES, instance=request.user.profile)
         if p_form.is_valid():
             p_form.save()
             messages.success(request, f'Your Profile has been updated!')
-            return redirect('profile')
+            return super(ProfileUpdateViewInstructor, self).post(request, **kwargs)
         else:
             messages.warning(request, f'Please try again')
             return redirect('profile')
-
-
-        messages.success(request, f'Your Profile has been updated!')
-        return super(ProfileUpdateViewInstructor, self).post(request, **kwargs)
 
     def test_func(self):
         list_of_instructor_usernames = [d['user_username'] for d in list(ListOfInstructors.objects.values('user_username')) if 'user_username' in d]
@@ -77,14 +73,14 @@ class ProfileUpdateViewStudent(LoginRequiredMixin, UserPassesTestMixin, UpdateVi
     success_url = reverse_lazy('profile_student')
 
     def get_object(self):
-        return self.request.user
+        return self.request.user.profile
 
     def post(self, request, **kwargs):
         p_form = ProfileUpdateFormStudent(request.POST, instance=request.user.profile)
         if p_form.is_valid():
             p_form.save()
             messages.success(request, f'Your Profile has been updated!')
-            return redirect('profile_student')
+            return super(ProfileUpdateViewStudent, self).post(request, **kwargs)
         else:
             messages.warning(request, f'Please try again')
             return redirect('profile_student')

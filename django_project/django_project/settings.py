@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'users.apps.UsersConfig',
     'payments.apps.PaymentsConfig',
+    'create_class.apps.CreateClassConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',

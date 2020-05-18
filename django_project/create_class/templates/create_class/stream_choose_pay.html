@@ -1,0 +1,11 @@
+{% extends "blog/base.html" %}
+{% block content%}
+<h1>Steam Class Step 2</h1>
+<article class="media content-section">
+    <p>You can now chose if your live-streamed class requires students to pay or if it is free for anyone to join.<br>
+    Payed Class:<br>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'create_stream_pay' %}">Create Payed Live Stream</a> <br> <br>
+    Free Class: <br>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'create_stream_no_pay' %}">Create Free Live Stream Class</a> </p>
+</article>
+{% endblock %}
