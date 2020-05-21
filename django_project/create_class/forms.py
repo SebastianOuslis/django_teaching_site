@@ -36,4 +36,3 @@ class CreateVideoInfo(forms.ModelForm):
     class Meta:
         model = ClassVideoInfo
         fields = ["video_name", "video_file"]
-

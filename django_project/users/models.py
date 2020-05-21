@@ -4,12 +4,17 @@ from PIL import Image
 from django.core.validators import RegexValidator
 import re
 
+def user_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    print(instance)
+    return 'profile_pics/user_{0}/{1}'.format(instance.user.username, filename)
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=40, default='First Last')
     instagram_handle = models.TextField(default='')
     youtube_channel = models.TextField(default='')
-    image = models.ImageField(default='default_logo.PNG', upload_to='profile_pics')
+    image = models.ImageField(default='default_logo.PNG', upload_to=user_directory_path)
     short_description = models.CharField(max_length=100, default='Add a short description of yourself')
     description = models.TextField(default='Add a description of your Skills and what you can offer as classes')
     youtube_profile_link = models.TextField(default='')

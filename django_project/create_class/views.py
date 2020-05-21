@@ -12,6 +12,7 @@ from .forms import ClassRootCreate, CreateTimeForClass, CreatePurchaseInfo, Crea
 from users.models import Profile, ListOfInstructors
 from django.contrib import messages
 
+#https://stackoverflow.com/questions/569468/django-multiple-models-in-one-template-using-forms
 
 class CreateClassStepOne(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     def test_func(self):
@@ -26,15 +27,25 @@ class CreateClassStepOne(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
 
 
 class CreateClassStreamNoPay(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
-    # def post(self, request, **kwargs):
-    #     p_form = ProfileUpdateFormStudent(request.POST, instance=request.user.profile)
-    #     if p_form.is_valid():
-    #         p_form.save()
-    #         messages.success(request, f'Your Profile has been updated!')
-    #         return redirect('profile_student')
-    #     else:
-    #         messages.warning(request, f'Please try again')
-    #         return redirect('profile_student')
+    def post(self, request, *args, **kwargs):
+        class_root_form = ClassRootCreate(request.POST, prefix='class_form')
+        stream_form = CreateStreamInfo(request.POST, prefix='stream_form')
+        time_form = CreateTimeForClass(request.POST, prefix='time_form')
+        if class_root_form.is_valid() and stream_form.is_valid() and time_form.is_valid():
+            class_root_object = ClassRoot(title=class_root_form.cleaned_data.get('title'), content=class_root_form.cleaned_data.get('content'), author=self.request.user, author_profile=self.request.user.profile,
+                                            category=class_root_form.cleaned_data.get('category'), is_purchase=False , is_one_on_one=False , is_stream=True , is_video=False)
+            class_root_object.save()
+            time_object = TimeForClass(classroot=class_root_object,
+                                       time_of_day=time_form.cleaned_data.get('time_of_day'),
+                                       date=time_form.cleaned_data.get('date'))
+            time_object.save()
+            stream_object = ClassStreamInfo(classroot=class_root_object, max_number_of_viewers=stream_form.cleaned_data.get('max_number_of_viewers'), stream_time=time_object)
+            stream_object.save()
+            messages.success(self.request,
+                             f'You have made a free stream')
+            return redirect('home')
+        else:
+            print("failed")
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -60,9 +71,28 @@ class CreateClassStreamNoPay(LoginRequiredMixin, UserPassesTestMixin, TemplateVi
 
 
 class CreateClassStreamPay(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
-    def post(self, request, **kwargs):
-        return render(request, "create_class/create_stream_pay.html")
-
+    def post(self, request, *args, **kwargs):
+        class_root_form = ClassRootCreate(request.POST, prefix='class_form')
+        stream_form = CreateStreamInfo(request.POST, prefix='stream_form')
+        purchase_form = CreatePurchaseInfo(request.POST, prefix='purchase_form')
+        time_form = CreateTimeForClass(request.POST, prefix='time_form')
+        if class_root_form.is_valid() and stream_form.is_valid() and time_form.is_valid() and purchase_form.is_valid():
+            class_root_object = ClassRoot(title=class_root_form.cleaned_data.get('title'), content=class_root_form.cleaned_data.get('content'), author=self.request.user, author_profile=self.request.user.profile,
+                                            category=class_root_form.cleaned_data.get('category'), is_purchase=True, is_one_on_one=False , is_stream=True , is_video=False)
+            class_root_object.save()
+            purchase_object = ClassPurchaseInfo(classroot=class_root_object, cost=purchase_form.cleaned_data.get('cost'))
+            purchase_object.save()
+            time_object = TimeForClass(classroot=class_root_object,
+                                       time_of_day=time_form.cleaned_data.get('time_of_day'),
+                                       date=time_form.cleaned_data.get('date'))
+            time_object.save()
+            stream_object = ClassStreamInfo(classroot=class_root_object, max_number_of_viewers=stream_form.cleaned_data.get('max_number_of_viewers'), stream_time=time_object)
+            stream_object.save()
+            messages.success(self.request,
+                             f'You have made a free stream')
+            return redirect('home')
+        else:
+            print("failed")
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -88,8 +118,25 @@ class CreateClassStreamPay(LoginRequiredMixin, UserPassesTestMixin, TemplateView
 
 
 class CreateClassOneToOnePay(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
-    def post(self, request, **kwargs):
-        return render(request, "create_class/create_one_on_one_pay.html", )
+    def post(self, request, *args, **kwargs):
+        class_root_form = ClassRootCreate(request.POST, prefix='class_form')
+        purchase_form = CreatePurchaseInfo(request.POST, prefix='purchase_form')
+        time_form = CreateTimeForClass(request.POST, prefix='time_form')
+        if class_root_form.is_valid() and time_form.is_valid() and purchase_form.is_valid():
+            class_root_object = ClassRoot(title=class_root_form.cleaned_data.get('title'), content=class_root_form.cleaned_data.get('content'), author=self.request.user, author_profile=self.request.user.profile,
+                                            category=class_root_form.cleaned_data.get('category'), is_purchase=True, is_one_on_one=True, is_stream=False, is_video=False)
+            class_root_object.save()
+            purchase_object = ClassPurchaseInfo(classroot=class_root_object, cost=purchase_form.cleaned_data.get('cost'))
+            purchase_object.save()
+            time_object = TimeForClass(classroot=class_root_object,
+                                       time_of_day=time_form.cleaned_data.get('time_of_day'),
+                                       date=time_form.cleaned_data.get('date'))
+            time_object.save()
+            messages.success(self.request,
+                             f'You have made a free stream')
+            return redirect('home')
+        else:
+            print("failed")
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -112,6 +159,24 @@ class CreateClassOneToOnePay(LoginRequiredMixin, UserPassesTestMixin, TemplateVi
         return redirect('home')
 
 class CreateClassVideoPay(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+    def post(self, request, *args, **kwargs):
+        class_root_form = ClassRootCreate(request.POST, prefix='class_form')
+        purchase_form = CreatePurchaseInfo(request.POST, prefix='purchase_form')
+        video_form = CreateVideoInfo(request.POST, request.FILES, prefix='video_form')
+        if class_root_form.is_valid() and video_form.is_valid() and purchase_form.is_valid():
+            class_root_object = ClassRoot(title=class_root_form.cleaned_data.get('title'), content=class_root_form.cleaned_data.get('content'), author=self.request.user, author_profile=self.request.user.profile,
+                                            category=class_root_form.cleaned_data.get('category'), is_purchase=True, is_one_on_one=False, is_stream=False, is_video=True)
+            class_root_object.save()
+            purchase_object = ClassPurchaseInfo(classroot=class_root_object, cost=purchase_form.cleaned_data.get('cost'))
+            purchase_object.save()
+            video_object = ClassVideoInfo(classroot=class_root_object, video_name=video_form.cleaned_data.get('video_name'), video_file=video_form.cleaned_data.get('video_file'))
+            video_object.save()
+            messages.success(self.request,
+                             f'You have made a free stream')
+            return redirect('home')
+        else:
+            print("failed")
+
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         class_create_form = ClassRootCreate(prefix='class_form')

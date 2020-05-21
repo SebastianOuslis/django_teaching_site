@@ -43,8 +43,8 @@ class ChargeClass(LoginRequiredMixin, TemplateView):
         context['stripe_charge_cents'] = context['stripe_charge'][-2:]
         return context
 
-    def post(self, request, *args, **kwards):
-        context = self.get_context_data(self, *args, **kwards)
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data(self, *args, **kwargs)
         stripe_charge = stripe.Charge.create(
             amount=int(context['stripe_charge']),
             currency='usd',

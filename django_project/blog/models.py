@@ -23,6 +23,12 @@ TIME_STRINGS = ['12:00 AM', '12:30 AM', '01:00 AM', '01:30 AM', '02:00 AM', '02:
 
 TIME_CHOICES = ( (TIME_VALUES_COLON_SPLIT[i],TIME_STRINGS[i]) for i in range(0,48) )
 
+
+def user_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    print(instance)
+    return 'videos/user_{0}/{1}'.format(instance.classroot.author.username, filename)
+
 class Category(models.Model):
     name = models.TextField()
 
@@ -78,9 +84,8 @@ class ClassRoot(models.Model):
     is_video = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
-        self.spots_available = self.initial_spots
         self.author_profile = Profile.objects.filter(user=self.author).first()
-        super(Post, self).save(*args, **kwargs)
+        super(ClassRoot, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.title
@@ -132,9 +137,11 @@ class ClassStreamInfo(models.Model):
 
 
 class ClassVideoInfo(models.Model):
+    #upload_to=user_directory_path
+
     classroot = models.ForeignKey(ClassRoot, on_delete=models.CASCADE)
     video_name = models.CharField(max_length=40, default="Class Video")
-    video_file = models.FileField(upload_to='videos/', null=True, verbose_name="")
+    video_file = models.FileField(upload_to=user_directory_path, null=True, verbose_name="")
     # video file
     # https://stackoverflow.com/questions/3116637/django-db-images-video
 
