@@ -14,7 +14,7 @@ class Profile(models.Model):
     full_name = models.CharField(max_length=40, default='First Last')
     instagram_handle = models.TextField(default='')
     youtube_channel = models.TextField(default='')
-    image = models.ImageField(default='default_logo.PNG', upload_to=user_directory_path)
+    image = models.ImageField(default='profile_pics/default_logo.PNG', upload_to=user_directory_path)
     short_description = models.CharField(max_length=100, default='Add a short description of yourself')
     description = models.TextField(default='Add a description of your Skills and what you can offer as classes')
     youtube_profile_link = models.TextField(default='')
@@ -31,12 +31,12 @@ class Profile(models.Model):
                 self.youtube_short_link = key_for_vid
         super().save(*args, **kwargs)
 
-        img = Image.open(self.image.path)
-
-        if img.height > 300 or img.width > 300:
-            output_size = (300,300)
-            img.thumbnail(output_size)
-            img.save(self.image.path)
+        # img = Image.open(self.image.path)
+        #
+        # if img.height > 300 or img.width > 300:
+        #     output_size = (300,300)
+        #     img.thumbnail(output_size)
+        #     img.save(self.image.path)
 
 class ListOfInstructors(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

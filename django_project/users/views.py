@@ -53,7 +53,7 @@ class ProfileUpdateViewInstructor(LoginRequiredMixin, UserPassesTestMixin, Updat
         if p_form.is_valid():
             p_form.save()
             messages.success(request, f'Your Profile has been updated!')
-            return super(ProfileUpdateViewInstructor, self).post(request, **kwargs)
+            return redirect('profile')
         else:
             messages.warning(request, f'Please try again')
             return redirect('profile')
