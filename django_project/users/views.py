@@ -7,6 +7,7 @@ from payments.models import Purchases
 from django.contrib.auth.models import User
 from .models import Profile, ListOfInstructors
 from django.urls import reverse_lazy
+from django.template import RequestContext
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
@@ -102,6 +103,19 @@ class UserSalesListView(ListView):
 
     def get_queryset(self):
         return Purchases.objects.filter(user_bought_from=self.request.user).order_by('-date_bought')
+
+
+def handler404(request, *args, **kwargs):
+    return render(request, 'users/404.html', locals())
+
+def handler500(request, *args, **kwargs):
+    return render(request, 'users/500.html', locals())
+
+def handler403(request, *args, **kwargs):
+    return render(request, 'users/403.html', locals())
+
+def handler400(request, *args, **kwargs):
+    return render(request, 'users/400.html', locals())
 
 
 

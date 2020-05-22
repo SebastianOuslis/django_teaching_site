@@ -19,14 +19,14 @@ from django.urls import path, include
 from users import views as user_views
 from users.views import UserSalesListView
 from payments import views as payment_views
-from blog.views import home
+from blog.views import HomeView
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.decorators import login_required
 
 
 urlpatterns = [
-    path('', home, name="home"),
+    path('', HomeView.as_view(), name="home"),
     path('admin/', admin.site.urls),
     path('blog/', include('blog.urls')),
     path('create_class/', include('create_class.urls')),
@@ -46,6 +46,11 @@ urlpatterns = [
     path('profile/sales', login_required(UserSalesListView.as_view()), name='sales'),
     path('payments/', include('payments.urls'))
 ]
+
+handler404 = 'users.views.handler404'
+handler500 = 'users.views.handler500'
+handler403 = 'users.views.handler403'
+handler400 = 'users.views.handler400'
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -4,7 +4,7 @@ from django.views.generic import (
     ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
     )
 from django.contrib.auth.models import User
-from .models import Category, Post, Review
+from .models import Category, Post, Review, ClassRoot
 from django.conf import settings
 from users.models import Profile, ListOfInstructors
 from django.contrib import messages
@@ -13,28 +13,35 @@ import stripe
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
-def home(request):
-    context = {
-        'posts': Post.objects.all()
-    }
-    return render(request, 'blog/home.html', context)
+# def home(request):
+#     context = {
+#         'classes': ClassRoot.objects.all()
+#     }
+#     return render(request, 'blog/home.html', context)
+
+class HomeView(ListView):
+    model = ClassRoot
+    template_name = 'blog/home.html'
+    context_object_name = 'classes'
+    ordering = ['-date_posted']
+    paginate_by = 5
 
 class PostListView(ListView):
-    model = Post
+    model = ClassRoot
     template_name = 'blog/home.html'
-    context_object_name = 'posts'
+    context_object_name = 'classes'
     ordering = ['-date_posted']
     paginate_by = 5
 
 class UserPostListView(ListView):
-    model = Post
+    model = ClassRoot
     template_name = 'blog/user_posts.html'
-    context_object_name = 'posts'
+    context_object_name = 'classes'
     paginate_by = 5
 
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
-        return Post.objects.filter(author=user).order_by('-date_posted')
+        return ClassRoot.objects.filter(author=user).order_by('-date_posted')
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -43,14 +50,14 @@ class UserPostListView(ListView):
         return context
 
 class CategoryPostListView(ListView):
-    model = Post
+    model = ClassRoot
     template_name = 'blog/category_posts.html'
-    context_object_name = 'posts'
+    context_object_name = 'classes'
     paginate_by = 5
 
     def get_queryset(self):
         category = get_object_or_404(Category, name=self.kwargs.get('category'))
-        return Post.objects.filter(category=category).order_by('-date_posted')
+        return ClassRoot.objects.filter(category=category).order_by('-date_posted')
 
 class PostDetailView(DetailView):
     model = Post

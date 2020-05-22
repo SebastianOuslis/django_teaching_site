@@ -45,21 +45,28 @@
         {% endif %}
     </div>
     <h1 class="mb-3">Posts by {{ page_user.profile.full_name }} ({{ page_obj.paginator.count}})</h1>
-    {% for post in posts %}
+    {% for class in classes %}
         <article class="media content-section">
-          <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+          <img class="rounded-circle article-img" src="{{ class.author.profile.image.url }}">
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2 userlink" href="{% url 'user-posts' post.author.username %}">{{ post.author_profile.full_name }}</a>
+              <a class="mr-2 userlink" href="{% url 'user-posts' class.author.username %}">{{ class.author_profile.full_name }}</a>
               <a class="spacing">Category: </a>
-              <a class="post-category" href="{% url 'post-category' post.category %}">{{ post.category }}</a>
+                <a class="post-category" href="{% url 'post-category' class.category %}">{{ class.category }}</a>
+              <a class="spacing">Class Type: </a>
+                {% if class.is_one_on_one %}
+                  <a class="post-category" href="{% url 'class-type' one_on_one %}">One on One</a>
+                {% elif class.is_stream %}
+                  <a class="post-category" href="{% url 'class-type' stream %}">Stream</a>
+                {% elif class.is_video %}
+                  <a class="post-category" href="{% url 'class-type' video %}">Pre Recorded</a>
+                {% endif %}
               <div class="spacing">
-                <!-- <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small> -->
-                <a>{{ post.date_posted|date:"F d, Y" }}</a>
+                <small class="text-muted">{{ class.date_posted|date:"F d, Y" }}</small>
               </div>
             </div>
-            <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
-            <p class="article-content">{{ post.content|truncatechars:30 }}</p>
+            <h2><a class="article-title" href="{% url 'post-detail' class.id %}">{{ class.title }}</a></h2>
+            <p class="article-content">{{ class.content|truncatechars:30 }}</p>
           </div>
         </article>
     {% endfor %}
