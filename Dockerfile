@@ -19,7 +19,7 @@ RUN set -ex \
     && apk add --virtual rundeps $runDeps \
     && apk del libressl-dev musl-dev libffi-dev \
     && apk del .build-deps \
-    && apk del .pynacl_deps 
+    && apk del .pynacl_deps
 
 ADD django_project /app
 WORKDIR /app
