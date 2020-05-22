@@ -2,15 +2,6 @@ FROM python:3.7.4-alpine3.10
 
 ADD django_project/requirements.txt /app/requirements.txt
 
-RUN apk add --no-cache \
-        libressl-dev \
-        musl-dev \
-        libffi-dev && \
-    pip install --no-cache-dir cryptography==2.1.4 && \
-    apk del \
-        libressl-dev \
-        musl-dev \
-        libffi-dev
 
 RUN set -ex \
     && apk add --no-cache --virtual .build-deps postgresql-dev build-base \
