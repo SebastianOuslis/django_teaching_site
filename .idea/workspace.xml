@@ -19,7 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="708304ce-202a-47a7-90dd-97f8b5275e00" name="Default Changelist" comment="" />
+    <list default="true" id="708304ce-202a-47a7-90dd-97f8b5275e00" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/config/nginx/conf.d/local.conf" beforeDir="false" afterPath="$PROJECT_DIR$/config/nginx/conf.d/local.conf" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
