@@ -5,7 +5,7 @@ ADD django_project/requirements.txt /app/requirements.txt
 
 RUN set -ex \
     && apk add --no-cache --virtual .build-deps postgresql-dev build-base \
-    && apk add --no-cache --virtual .pillow-deps gcc python3-dev musl-dev \
+    && apk add --no-cache gcc python3-dev musl-dev \
     && python -m venv /env \
     && apk add --no-cache libressl-dev libffi-dev \
     && /env/bin/pip install --upgrade pip \
@@ -17,7 +17,6 @@ RUN set -ex \
         | xargs -r apk info --installed \
         | sort -u)" \
     && apk add --virtual rundeps $runDeps \
-    && apk del .pillow-deps \
     && apk del .build-deps
 
 ADD django_project /app
