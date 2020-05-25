@@ -8,7 +8,16 @@ services:
     image: nginx:1.13
     ports:
       - 80:80
+      - 433:433
     volumes:
-      - ./config/nginx/conf.d:/etc/nginx/conf.d
+      - ./config/nginx:/etc/nginx
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
     depends_on:  # <-- wait for djangoapp to be "ready" before starting this service
       - djangoapp
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
