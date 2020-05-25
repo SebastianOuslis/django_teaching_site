@@ -11,6 +11,6 @@ services:
       - 443:443
     volumes:
       - ./config/nginx/conf.d:/etc/nginx/conf.d
-      - ./data/ssl:/etc/nginx/certs
+      - /data/ssl:/etc/nginx/certs
     depends_on:  # <-- wait for djangoapp to be "ready" before starting this service
       - djangoapp
