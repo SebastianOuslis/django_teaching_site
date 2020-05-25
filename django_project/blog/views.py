@@ -4,7 +4,7 @@ from django.views.generic import (
     ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
     )
 from django.contrib.auth.models import User
-from .models import Category, Post, Review, ClassRoot
+from .models import Category, Post, Review, ClassRoot, ClassPurchaseInfo, ClassOneOnOneInfo, ClassStreamInfo, ClassVideoInfo, TimeForClass
 from django.conf import settings
 from users.models import Profile, ListOfInstructors
 from django.contrib import messages
@@ -49,6 +49,15 @@ class UserPostListView(ListView):
         context['page_user'] = page_user
         return context
 
+    def test_func(self):
+        list_of_instructor_usernames = [d['user_username'] for d in list(ListOfInstructors.objects.values('user_username')) if 'user_username' in d]
+        if self.kwargs.get('username') in list_of_instructor_usernames:
+            return True
+        return False
+
+    def handle_no_permission(self):
+        return redirect('home')
+
 class CategoryPostListView(ListView):
     model = ClassRoot
     template_name = 'blog/category_posts.html'
@@ -59,22 +68,54 @@ class CategoryPostListView(ListView):
         category = get_object_or_404(Category, name=self.kwargs.get('category'))
         return ClassRoot.objects.filter(category=category).order_by('-date_posted')
 
+class ClassTypeListView(ListView):
+    model = ClassRoot
+    template_name = 'blog/class_types.html'
+    context_object_name = 'classes'
+    paginate_by = 5
+
+    def get_queryset(self):
+        class_type = self.kwargs.get('type')
+        if class_type == 'one_on_one':
+            return ClassRoot.objects.filter(is_one_on_one=True).order_by('-date_posted')
+        elif class_type == 'stream':
+            return ClassRoot.objects.filter(is_stream=True).order_by('-date_posted')
+        elif class_type == 'video':
+            return ClassRoot.objects.filter(is_video=True).order_by('-date_posted')
+        else:
+            return redirect('home')
+
 class PostDetailView(DetailView):
-    model = Post
+    model = ClassRoot
+    template_name = 'blog/post_detail.html'
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        post_object = self.object
-        if post_object.is_purchase:
-            charge = str(int(post_object.cost * 100))
+        class_root_object = self.object
+        if class_root_object.is_purchase:
+            purchase_info = get_object_or_404(ClassPurchaseInfo, classroot=class_root_object)
+            charge = str(int(purchase_info.cost * 100))
             dollars_of_charge = charge[:-2]
             cents_of_charge = charge[-2:]
             context['key'] = settings.STRIPE_PUBLISHABLE_KEY
-            context['stripe_description'] = 'A Django Charge'
+            context['stripe_description'] = str(class_root_object.title)+" by "+str(class_root_object.author.username)
             context['stripe_charge'] = charge
             context['stripe_charge_dollars'] = dollars_of_charge
             context['stripe_charge_cents'] = cents_of_charge
             context['stripe_locale'] = 'auto'
+        if class_root_object.is_one_on_one:
+            one_on_one_info = get_object_or_404(ClassOneOnOneInfo, classroot=class_root_object)
+            time_info = get_object_or_404(TimeForClass, classroot=class_root_object)
+            context["class_date"] = str(time_info.date)
+            context["class_time"] = str(time_info.time_of_day)
+        if class_root_object.is_stream:
+            stream_info = get_object_or_404(ClassStreamInfo, classroot=class_root_object)
+            time_info = get_object_or_404(TimeForClass, classroot=class_root_object)
+            context["class_date"] = str(time_info.date)
+            context["class_time"] = str(time_info.time_of_day)
+        if class_root_object.is_video:
+            video_info = get_object_or_404(ClassVideoInfo, classroot=class_root_object)
+            context["video_name"] = video_info.video_name
         return context
 
     # def get_context_data(self, *args, **kwargs):

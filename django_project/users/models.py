@@ -6,7 +6,6 @@ import re
 
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    print(instance)
     return 'profile_pics/user_{0}/{1}'.format(instance.user.username, filename)
 
 class Profile(models.Model):
@@ -25,6 +24,8 @@ class Profile(models.Model):
 
     def save(self, *args, **kwargs):
         youtube_profile_string = self.youtube_profile_link
+        if youtube_profile_string == '':
+            self.youtube_short_link = ''
         if "youtube" in youtube_profile_string or "youtu" in youtube_profile_string:
             if "=" in youtube_profile_string:
                 key_for_vid = re.split("=", youtube_profile_string)[1]

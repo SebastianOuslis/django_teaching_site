@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from blog.models import Post
+from blog.models import Post, ClassRoot
 from django.utils import timezone
 
 class Purchases(models.Model):
@@ -12,7 +12,7 @@ class Purchases(models.Model):
     dollars_string = models.TextField(default='0')
     cents_string = models.TextField(default='00')
     date_bought = models.DateTimeField(default=timezone.now)
-    post_bought_from = models.ForeignKey(Post, related_name='Item_bought', null=True, default=None, on_delete=models.SET_DEFAULT)
+    post_bought_from = models.ForeignKey(ClassRoot, related_name='Item_bought', null=True, default=None, on_delete=models.SET_DEFAULT)
     post_bought_from_title = models.TextField(default='class title')
     currency = models.CharField(max_length=5)
 

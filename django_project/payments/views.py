@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.conf import settings
 from django.views.generic    import TemplateView
 from .models import Purchases, StripeInteractions
-from blog.models import Post
+from blog.models import Post, ClassPurchaseInfo, ClassRoot
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
@@ -33,12 +33,13 @@ class ChargeClass(LoginRequiredMixin, TemplateView):
         print(self.kwargs)
         print(self.kwargs.get('username'))
         page_user = get_object_or_404(User, username=self.kwargs.get('username'))
-        page_post = get_object_or_404(Post, id=self.kwargs.get('pk'))
+        class_object = get_object_or_404(ClassRoot, id=self.kwargs.get('pk'))
+        purchase_info = get_object_or_404(ClassPurchaseInfo, classroot=class_object)
         context['page_user'] = page_user
         context['user'] = self.request.user
-        context['post_purchased'] = page_post
-        context['stripe_description'] = page_post.title
-        context['stripe_charge'] = str(int(page_post.cost*100))
+        context['post_purchased'] = class_object
+        context['stripe_description'] = class_object.title
+        context['stripe_charge'] = str(int(purchase_info.cost*100))
         context['stripe_charge_dollars'] = context['stripe_charge'][:-2]
         context['stripe_charge_cents'] = context['stripe_charge'][-2:]
         return context

@@ -26,7 +26,6 @@ TIME_CHOICES = ( (TIME_VALUES_COLON_SPLIT[i],TIME_STRINGS[i]) for i in range(0,4
 
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    print(instance)
     return 'videos/user_{0}/{1}'.format(instance.classroot.author.username, filename)
 
 class Category(models.Model):

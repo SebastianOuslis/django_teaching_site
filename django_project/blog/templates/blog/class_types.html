@@ -1,7 +1,15 @@
 {% extends "blog/base.html" %}
 {% block content%}
 
-    <h1 class="mb-3">View all classes in: {{ view.kwargs.category }} ({{ page_obj.paginator.count}})</h1>
+    <h1 class="mb-3">View all
+        {% if view.kwargs.type == 'one_on_one' %}
+        One on One
+        {% elif view.kwargs.type == 'stream' %}
+        Live Stream
+        {% elif view.kwargs.type == 'video' %}
+        Video
+        {% endif %}
+        classes ({{ page_obj.paginator.count}})</h1>
     {% for class in classes %}
         <article class="media content-section">
           <img class="rounded-circle article-img" src="{{ class.author.profile.image.url }}">

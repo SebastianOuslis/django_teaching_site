@@ -55,11 +55,11 @@
                 <a class="post-category" href="{% url 'post-category' class.category %}">{{ class.category }}</a>
               <a class="spacing">Class Type: </a>
                 {% if class.is_one_on_one %}
-                  <a class="post-category" href="{% url 'class-type' one_on_one %}">One on One</a>
+                  <a class="post-category" href="{% url 'class-type' 'one_on_one' %}">One on One</a>
                 {% elif class.is_stream %}
-                  <a class="post-category" href="{% url 'class-type' stream %}">Stream</a>
+                  <a class="post-category" href="{% url 'class-type' 'stream' %}">Stream</a>
                 {% elif class.is_video %}
-                  <a class="post-category" href="{% url 'class-type' video %}">Pre Recorded</a>
+                  <a class="post-category" href="{% url 'class-type' 'video' %}">Pre Recorded</a>
                 {% endif %}
               <div class="spacing">
                 <small class="text-muted">{{ class.date_posted|date:"F d, Y" }}</small>

@@ -95,7 +95,7 @@ class ProfileUpdateViewStudent(LoginRequiredMixin, UserPassesTestMixin, UpdateVi
     def handle_no_permission(self):
         return redirect('profile')
 
-class UserSalesListView(ListView):
+class UserSalesListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Purchases
     template_name = 'users/user_sales.html'
     context_object_name = 'sales'
@@ -103,6 +103,15 @@ class UserSalesListView(ListView):
 
     def get_queryset(self):
         return Purchases.objects.filter(user_bought_from=self.request.user).order_by('-date_bought')
+
+    def test_func(self):
+        list_of_instructor_usernames = [d['user_username'] for d in list(ListOfInstructors.objects.values('user_username')) if 'user_username' in d]
+        if self.request.user.username in list_of_instructor_usernames:
+            return True
+        return False
+
+    def handle_no_permission(self):
+        return redirect('profile')
 
 
 def handler404(request, *args, **kwargs):

@@ -89,7 +89,7 @@ class CreateClassStreamPay(LoginRequiredMixin, UserPassesTestMixin, TemplateView
             stream_object = ClassStreamInfo(classroot=class_root_object, max_number_of_viewers=stream_form.cleaned_data.get('max_number_of_viewers'), stream_time=time_object)
             stream_object.save()
             messages.success(self.request,
-                             f'You have made a free stream')
+                             f'You have made a payed stream class')
             return redirect('home')
         else:
             print("failed")
@@ -132,8 +132,10 @@ class CreateClassOneToOnePay(LoginRequiredMixin, UserPassesTestMixin, TemplateVi
                                        time_of_day=time_form.cleaned_data.get('time_of_day'),
                                        date=time_form.cleaned_data.get('date'))
             time_object.save()
+            oneonone_object = ClassOneOnOneInfo(classroot=class_root_object, class_time=time_object)
+            oneonone_object.save()
             messages.success(self.request,
-                             f'You have made a free stream')
+                             f'You have made a payed one on one class')
             return redirect('home')
         else:
             print("failed")
@@ -172,7 +174,7 @@ class CreateClassVideoPay(LoginRequiredMixin, UserPassesTestMixin, TemplateView)
             video_object = ClassVideoInfo(classroot=class_root_object, video_name=video_form.cleaned_data.get('video_name'), video_file=video_form.cleaned_data.get('video_file'))
             video_object.save()
             messages.success(self.request,
-                             f'You have made a free stream')
+                             f'You have made a payed video class')
             return redirect('home')
         else:
             print("failed")

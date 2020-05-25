@@ -10,17 +10,41 @@
             <div class="spacing">
               <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
             </div>
+          <!--
           {% if object.author == user %}
             <div>
               <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
               <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
             </div>
           {% endif %}
+          -->
         </div>
-        <h2 class="article-title">{{ object.title }}</h2>
-        
+        <h2 class="article-title">{{ object.title }}  ---
+        {% if object.is_one_on_one %}
+          One on One Class
+        {% elif object.is_stream %}
+          Live Stream Class
+        {% elif object.is_video %}
+          Video Class
+        {% endif %}
+        </h2>
+        <br>
+        <p class="article-content"><br>{{ object.content }}</p>
+        <p class="article-content">
+        {% if object.is_one_on_one %}
+          Take this one on one class! Buy below
+        {% elif object.is_stream %}
+          {% if object.is_purchase %}
+            Watch this stream! Buy below
+          {% else %}
+            Watch this stream for Free!
+          {% endif %}
+        {% elif object.is_video %}
+          Watch this video! Buy below
+        {% endif %}
+        </p>
         {% if object.is_purchase %}
-          <h2>Buy for <strong>${{ object.cost }}</strong>!</h2>
+          <h2>Buy for <strong>${{ stripe_charge_dollars }}.{{ stripe_charge_cents }}</strong>!</h2>
           {% if user.is_authenticated %}
             {% if object.author != user %}
               <form action="{% url 'payments-charge' object.author.username object.id %}" method="post">
@@ -37,8 +61,6 @@
             <a class="mr-2" href="{% url 'login' %}?next={{request.path}}">Login to Purchase</a>
           {% endif %}
         {% endif %}
-        <br>
-        <p class="article-content"><br>{{ object.content }}</p>
       </div>
     </article>
 {% endblock content %}
