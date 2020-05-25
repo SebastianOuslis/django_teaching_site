@@ -19,18 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="708304ce-202a-47a7-90dd-97f8b5275e00" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/config/nginx/conf.d/local.conf" beforeDir="false" afterPath="$PROJECT_DIR$/config/nginx/conf.d/local.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/certbot/conf/accounts/acme-v02.api.letsencrypt.org/directory/5756bd8556ca32e87ebd53d125895d56/meta.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/certbot/conf/accounts/acme-v02.api.letsencrypt.org/directory/5756bd8556ca32e87ebd53d125895d56/private_key.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/certbot/conf/accounts/acme-v02.api.letsencrypt.org/directory/5756bd8556ca32e87ebd53d125895d56/regr.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/certbot/conf/csr/0000_csr-certbot.pem" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/certbot/conf/keys/0000_key-certbot.pem" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/certbot/conf/options-ssl-nginx.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/certbot/conf/ssl-dhparams.pem" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/init-letsencrypt.sh" beforeDir="false" />
-    </list>
+    <list default="true" id="708304ce-202a-47a7-90dd-97f8b5275e00" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
