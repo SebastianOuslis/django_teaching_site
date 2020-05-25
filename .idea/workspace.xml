@@ -20,8 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="708304ce-202a-47a7-90dd-97f8b5275e00" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/config/nginx/conf.d/local.conf" beforeDir="false" afterPath="$PROJECT_DIR$/config/nginx/conf.d/local.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_project/blog/templates/blog/post_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/blog/templates/blog/post_detail.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
