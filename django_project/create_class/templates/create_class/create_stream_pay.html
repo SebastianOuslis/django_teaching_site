@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 {% block content%}
 <h1>Create Payed Live Stream</h1>
-<article class="media content-section">
+<div>
   <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <fieldset class="form-group">
@@ -15,5 +15,5 @@
         <button class="btn btn-outline-info" type="submit">Create Class</button>
     </div>
   </form>
-</article>
+</div>
 {% endblock %}

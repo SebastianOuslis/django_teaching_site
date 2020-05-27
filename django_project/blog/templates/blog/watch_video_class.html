@@ -1,0 +1,8 @@
+{% extends "blog/base.html" %}
+{% block content%}
+    <h2 class="article-title">{{ class_root_object.title }}</h2>
+    <video width='800' controls>
+        <source src="{{ video_file.url }}" type='video/mp4'>
+        Your browser does not support the video tag.
+    </video>
+{% endblock content %}

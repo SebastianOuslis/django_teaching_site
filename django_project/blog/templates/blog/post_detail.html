@@ -53,6 +53,9 @@
             <a class="mr-2" href="{% url 'login' %}?next={{request.path}}">Login to Purchase</a>
           {% endif %}
         {% endif %}
+        {% if object.is_video %}
+          <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'class-video' object.id %}">Watch This Video</a>
+        {% endif %}
       </div>
     </article>
 {% endblock content %}

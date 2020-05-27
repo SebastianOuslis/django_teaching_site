@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from .models import Category, Post, Review, ClassRoot, ClassPurchaseInfo, ClassOneOnOneInfo, ClassStreamInfo, ClassVideoInfo, TimeForClass
 from django.conf import settings
 from users.models import Profile, ListOfInstructors
+from payments.models import Purchases
 from django.contrib import messages
 
 import stripe
@@ -213,6 +214,54 @@ class ReviewCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
     def handle_no_permission(self):
         return redirect('profile')
+
+
+class ClassVideoView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+    model = ClassRoot
+    template_name = 'blog/watch_video_class.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        class_root_object = class_object = get_object_or_404(ClassRoot, id=self.kwargs.get('pk'))
+        context['class_root_object'] = class_root_object
+        if class_root_object.is_one_on_one:
+            one_on_one_info = get_object_or_404(ClassOneOnOneInfo, classroot=class_root_object)
+            time_info = get_object_or_404(TimeForClass, classroot=class_root_object)
+            context["class_date"] = str(time_info.date)
+            context["class_time"] = str(time_info.time_of_day)
+        if class_root_object.is_stream:
+            stream_info = get_object_or_404(ClassStreamInfo, classroot=class_root_object)
+            time_info = get_object_or_404(TimeForClass, classroot=class_root_object)
+            context["class_date"] = str(time_info.date)
+            context["class_time"] = str(time_info.time_of_day)
+        if class_root_object.is_video:
+            video_info = get_object_or_404(ClassVideoInfo, classroot=class_root_object)
+            context["video_name"] = video_info.video_name
+            context["video_file"] = video_info.video_file
+        return context
+
+    def get_object(self):
+        return get_object_or_404(ClassRoot, id=self.kwargs['pk'])
+
+    def test_func(self):
+        class_object = get_object_or_404(ClassRoot, id=self.kwargs.get('pk'))
+        if class_object.is_video:
+            if self.request.user == get_object_or_404(User, username=class_object.author.username):
+                return True
+            list_of_titles = [d['post_bought_from_title'] for d in
+                                            list(Purchases.objects.filter(user_bought_by=self.request.user)) if
+                                            'post_bought_from_title' in d]
+            if class_object.title in list_of_titles:
+                return True
+            else:
+                messages.warning(self.request,
+                                 f'Please pay for the class and you can view this video')
+                return False
+        else:
+            return False
+
+    def handle_no_permission(self):
+        return redirect('home')
 
 
 #video calling stuffs
