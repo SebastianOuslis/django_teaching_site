@@ -9,6 +9,7 @@ services:
     ports:
       - 80:80
     volumes:
-      - ./config/nginx:/etc/nginx
+      - ./config/nginx/conf.d:/etc/nginx/conf.d
+      - ./data:/files_to_serve
     depends_on:  # <-- wait for djangoapp to be "ready" before starting this service
       - djangoapp
