@@ -8,6 +8,7 @@ services:
     image: nginx:1.13
     ports:
       - 80:80
+      - 443:443
     volumes:
       - ./config/nginx/conf.d:/etc/nginx/conf.d
       - ./data:/files_to_serve
