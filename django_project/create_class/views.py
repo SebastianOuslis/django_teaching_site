@@ -58,6 +58,8 @@ class CreateClassStreamNoPay(LoginRequiredMixin, UserPassesTestMixin, TemplateVi
         return context
 
     def test_func(self):
+        #not currently allowed
+        return False
         list_of_instructor_usernames = [d['user_username'] for d in
                                         list(ListOfInstructors.objects.values('user_username')) if 'user_username' in d]
         if self.request.user.username in list_of_instructor_usernames:
@@ -107,6 +109,8 @@ class CreateClassStreamPay(LoginRequiredMixin, UserPassesTestMixin, TemplateView
         return context
 
     def test_func(self):
+        # not currently allowed
+        return False
         list_of_instructor_usernames = [d['user_username'] for d in list(ListOfInstructors.objects.values('user_username')) if 'user_username' in d]
         if self.request.user.username in list_of_instructor_usernames:
             return True

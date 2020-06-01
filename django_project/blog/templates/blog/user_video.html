@@ -15,7 +15,6 @@
       font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     }
     video {
-      max-width: calc(50% - 100px);
       margin: 0 50px;
       box-sizing: border-box;
       border-radius: 2px;
@@ -36,15 +35,16 @@
 page_user_username="{{ page_user.username }}" user_username="{{ user.username }}"
 {% endblock data_in_body %}
 {% block video_call%}
-  <div class="media-body">
-      <video id="localVideo" autoplay muted></video>
-      <video id="remoteVideo" autoplay></video>
+  <div class="row">
+      <video width='600' id="remoteVideo" autoplay controls></video>
+      <video width='200' id="localVideo" autoplay muted></video>
   </div>
   <script>
     var page_user_username = "{{ page_user.username }}";
     var user_username = "{{ user.username }}";
   </script>
   <!--
+  max-width: calc(50% - 100px);
   import seedrandom from online
   -->
   <script src=//cdnjs.cloudflare.com/ajax/libs/seedrandom/2.3.10/seedrandom.min.js></script>

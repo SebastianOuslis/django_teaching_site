@@ -119,10 +119,51 @@ class PostDetailView(DetailView):
             context["video_name"] = video_info.video_name
         return context
 
-    # def get_context_data(self, *args, **kwargs):
-    #     context = super(DetailView, self).get_context_data(*args, **kwargs)
-    #     print(context)
-    #     return context
+class PostSalesView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+    model = ClassRoot
+    template_name = 'blog/post_sales.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        class_root_object = self.object
+        context['list_of_buyers'] = [{'date_bought': d.date_bought, 'user_bought_by_full_name': d.user_bought_by.profile.full_name, 'user_bought_by_email': d.user_bought_by.email} for d in
+                              list(Purchases.objects.filter(post_bought_from=class_root_object))]
+        if class_root_object.is_purchase:
+            purchase_info = get_object_or_404(ClassPurchaseInfo, classroot=class_root_object)
+            charge = str(int(purchase_info.cost * 100))
+            dollars_of_charge = charge[:-2]
+            cents_of_charge = charge[-2:]
+            context['key'] = settings.STRIPE_PUBLISHABLE_KEY
+            context['stripe_description'] = str(class_root_object.title)+" by "+str(class_root_object.author.username)
+            context['stripe_charge'] = charge
+            context['stripe_charge_dollars'] = dollars_of_charge
+            context['stripe_charge_cents'] = cents_of_charge
+            context['stripe_locale'] = 'auto'
+        if class_root_object.is_one_on_one:
+            one_on_one_info = get_object_or_404(ClassOneOnOneInfo, classroot=class_root_object)
+            time_info = get_object_or_404(TimeForClass, classroot=class_root_object)
+            context["class_date"] = str(time_info.date)
+            context["class_time"] = str(time_info.time_of_day)
+        if class_root_object.is_stream:
+            stream_info = get_object_or_404(ClassStreamInfo, classroot=class_root_object)
+            time_info = get_object_or_404(TimeForClass, classroot=class_root_object)
+            context["class_date"] = str(time_info.date)
+            context["class_time"] = str(time_info.time_of_day)
+        if class_root_object.is_video:
+            video_info = get_object_or_404(ClassVideoInfo, classroot=class_root_object)
+            context["video_name"] = video_info.video_name
+        return context
+
+    def handle_no_permission(self):
+        return redirect('home')
+
+    def test_func(self):
+        class_object = get_object_or_404(ClassRoot, pk=self.kwargs.get('pk'))
+        if class_object.is_purchase == False:
+            return False
+        if self.request.user == class_object.author:
+            return True
+        return False
 
 class PostCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Post
@@ -248,7 +289,7 @@ class ClassVideoView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
         if class_object.is_video:
             if self.request.user == get_object_or_404(User, username=class_object.author.username):
                 return True
-            list_of_titles = [d['post_bought_from_title'] for d in
+            list_of_titles = [d.post_bought_from_title for d in
                                             list(Purchases.objects.filter(user_bought_by=self.request.user)) if
                                             'post_bought_from_title' in d]
             if class_object.title in list_of_titles:

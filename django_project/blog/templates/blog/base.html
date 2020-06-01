@@ -37,14 +37,15 @@
           <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
-
+            <!--
             <div class="search-container">
-              <form class="form-inline">
+              <form class="video_callform-inline">
                 <i class="fas fa-search" aria-hidden="true"></i>
                 <input class="form-control form-control-sm ml-3 w-75"type="text" placeholder="Search Classes..." 
                 aria-label="Search">
               </form>
             </div>
+            -->
 
 
             <div class="navbar-nav ml-auto">
@@ -67,10 +68,9 @@
         </div>
       </nav>
     </header>
-
+    {% block video_call %}{% endblock video_call %}
     <main role="main" class="container">
       <div>
-          {% block video_call %}{% endblock video_call %}
           {% block chat %}{% endblock chat %}
       </div>
       <div class="row">

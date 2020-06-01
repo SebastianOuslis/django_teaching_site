@@ -23,8 +23,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'iip4i1=s!59huodyb2do@fhji3ch*=65n%@dr1dq065yf38#0z'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-#DEBUG = True
+#DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 #ALLOWED_HOSTS = ['nxtklass-env.eba-3pefeg3f.us-east-2.elasticbeanstalk.com']
@@ -183,5 +183,5 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'nxtklass@gmail.com'
 EMAIL_HOST_PASSWORD = 'sonocozos-323!'
 
-STRIPE_SECRET_KEY = 'sk_test_PYtaMymFGVIcQFkSaHHP4YSm00gNV4nA19'
-STRIPE_PUBLISHABLE_KEY = 'pk_test_uJX7J1zORWg2qjjlsqW9FGAu00gbWzyWNz'
+STRIPE_SECRET_KEY = 'sk_live_kIqmNhjI0wvAiw0JgIT0nCIZ001I0E5PQb'
+STRIPE_PUBLISHABLE_KEY = 'pk_live_HrfkerVzbyqifiJC1VxKx97j00reX3Dzjs'

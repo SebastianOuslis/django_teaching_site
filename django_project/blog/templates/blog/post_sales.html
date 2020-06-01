@@ -1,0 +1,20 @@
+{% extends "blog/base.html" %}
+{% block content%}
+    <h2 class="article-title">{{ object.title }}  ---
+        {% if object.is_one_on_one %}
+          One on One Class
+        {% elif object.is_stream %}
+          Live Stream Class
+        {% elif object.is_video %}
+          Video Class
+        {% endif %}
+    </h2>
+    {% for buyers in list_of_buyers %}
+        <article class="media content-section">
+          <div class="media-body">
+              <p class="article-content">{{ buyers.user_bought_by_full_name }} bought this class on {{ buyers.date_bought }} <br> Email: {{ buyers.user_bought_by_email }}
+              </p>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}
