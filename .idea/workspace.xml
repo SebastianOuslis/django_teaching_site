@@ -20,17 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="708304ce-202a-47a7-90dd-97f8b5275e00" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/django_project/blog/templates/blog/post_sales.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/django_project/blog/templates/blog/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/blog/templates/blog/about.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/django_project/blog/templates/blog/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/blog/templates/blog/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/django_project/blog/templates/blog/post_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/blog/templates/blog/post_detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/django_project/blog/templates/blog/user_video.html" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/blog/templates/blog/user_video.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/django_project/blog/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/blog/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/django_project/blog/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/blog/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/django_project/create_class/templates/create_class/create_class_step_one.html" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/create_class/templates/create_class/create_class_step_one.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/django_project/create_class/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/create_class/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/django_project/django_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/django_project/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

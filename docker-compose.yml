@@ -3,9 +3,11 @@ version: '3'
 services:
   djangoapp:
     build: .
+    restart: always
 
   nginx:
     image: nginx:1.13
+    restart: always
     ports:
       - 80:80
       - 443:443
