@@ -7,5 +7,6 @@
 - if you want to remake the image
 - docker image prune -a
 - docker system prune -a
+- docker container rm -f to kill and remove running containers
 
 
