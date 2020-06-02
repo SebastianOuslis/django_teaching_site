@@ -103,11 +103,12 @@ class PostDetailView(DetailView):
                 context['purchased_or_is_author'] = False
         else:
             context['purchased_or_is_author'] = False
+        context['user_who_purchased'] = self.object.author
         if class_root_object.is_purchase:
             purchase_info = get_object_or_404(ClassPurchaseInfo, classroot=class_root_object)
             if len(list(Purchases.objects.filter(post_bought_from=class_root_object))) > 0:
                 context['has_not_been_purchased'] = False
-                context['user_who_purchased'] = list(Purchases.objects.filter(post_bought_from=class_root_object))[0]
+                context['user_who_purchased'] = (list(Purchases.objects.filter(post_bought_from=class_root_object))[0]).user_bought_by
             else:
                 context['has_not_been_purchased'] = True
             charge = str(int(purchase_info.cost * 100))

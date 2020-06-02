@@ -28,10 +28,11 @@
             {% endif %}
           {% endif %}
         {% endif %}
+        <p class="article-content"><br>{{ object.content }} </p>
         {% if object.is_purchase %}
           {% if object.is_one_on_one %}
             {% if has_not_been_purchased %}
-              <p class="article-content"><br>{{ object.content }} <br>
+              <p class="article-content">
               {% if object.is_one_on_one %}
                 Take this one on one class! Buy below
               {% elif object.is_stream %}
@@ -64,7 +65,7 @@
               <p>This class has already been purchased</p>
             {% endif %}
           {% else %}
-            <p class="article-content"><br>{{ object.content }} <br>
+            <p class="article-content">
             {% if object.is_one_on_one %}
               Take this one on one class! Buy below
             {% elif object.is_stream %}
