@@ -33,16 +33,6 @@
         {% else %}
             <a class="mr-2" href="{% url 'login' %}?next={{request.path}}">Login to Review this User</a>
         {% endif %}
-        {% if user.is_authenticated %}
-            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'video-call' page_user.username %}">Video Call this User</a>
-        {% else %}
-            <a class="mr-2" href="{% url 'login' %}?next={{request.path}}">Login to Video Call this User</a>
-        {% endif %}
-        {% if user.is_authenticated %}
-            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'text-chat' page_user.username %}">Text Chat with this User</a>
-        {% else %}
-            <a class="mr-2" href="{% url 'login' %}?next={{request.path}}">Login to Text Chat with this User</a>
-        {% endif %}
     </div>
     <h1 class="mb-3">Posts by {{ page_user.profile.full_name }} ({{ page_obj.paginator.count}})</h1>
     {% for class in classes %}

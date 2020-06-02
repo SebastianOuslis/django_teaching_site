@@ -93,8 +93,23 @@ class PostDetailView(DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         class_root_object = self.object
+        if self.request.user.is_authenticated:
+            list_of_titles = [d.post_bought_from_title for d in
+                                            list(Purchases.objects.filter(user_bought_by=self.request.user)) if
+                                            'post_bought_from_title' in d]
+            if self.request.user == class_root_object.author or class_root_object.title in list_of_titles:
+                context['purchased_or_is_author'] = True
+            else:
+                context['purchased_or_is_author'] = False
+        else:
+            context['purchased_or_is_author'] = False
         if class_root_object.is_purchase:
             purchase_info = get_object_or_404(ClassPurchaseInfo, classroot=class_root_object)
+            if len(list(Purchases.objects.filter(post_bought_from=class_root_object))) > 0:
+                context['has_not_been_purchased'] = False
+                context['user_who_purchased'] = list(Purchases.objects.filter(post_bought_from=class_root_object))[0]
+            else:
+                context['has_not_been_purchased'] = True
             charge = str(int(purchase_info.cost * 100))
             dollars_of_charge = charge[:-2]
             cents_of_charge = charge[-2:]

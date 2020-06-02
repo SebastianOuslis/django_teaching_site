@@ -28,40 +28,88 @@
             {% endif %}
           {% endif %}
         {% endif %}
-        <p class="article-content"><br>{{ object.content }} <br>
-        {% if object.is_one_on_one %}
-          Take this one on one class! Buy below
-        {% elif object.is_stream %}
-          {% if object.is_purchase %}
-            Watch this stream! Buy below
-          {% else %}
-            Watch this stream for Free!
-          {% endif %}
-        {% elif object.is_video %}
-          Watch this video! Buy below
-        {% endif %}
-        </p>
         {% if object.is_purchase %}
-          <h2>Buy for <strong>${{ stripe_charge_dollars }}.{{ stripe_charge_cents }}</strong>!</h2>
-          {% if user.is_authenticated %}
-            {% if object.author != user %}
-              <form action="{% url 'payments-charge' object.author.username object.id %}" method="post">
-                {% csrf_token %}
-                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                    data-key="{{ key }}"
-                    data-description="{{ stripe_description }}"
-                    data-amount="{{ stripe_charge }}"
-                    data-locale="{{ stripe_locale }}">
-                </script>
-              </form>
+          {% if object.is_one_on_one %}
+            {% if has_not_been_purchased %}
+              <p class="article-content"><br>{{ object.content }} <br>
+              {% if object.is_one_on_one %}
+                Take this one on one class! Buy below
+              {% elif object.is_stream %}
+                {% if object.is_purchase %}
+                  Watch this stream! Buy below
+                {% else %}
+                  Watch this stream for Free!
+                {% endif %}
+              {% elif object.is_video %}
+                Watch this video! Buy below
+              {% endif %}
+              </p>
+              <h2>Buy for <strong>${{ stripe_charge_dollars }}.{{ stripe_charge_cents }}</strong>!</h2>
+              {% if user.is_authenticated %}
+                {% if object.author != user %}
+                  <form action="{% url 'payments-charge' object.author.username object.id %}" method="post">
+                    {% csrf_token %}
+                    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                        data-key="{{ key }}"
+                        data-description="{{ stripe_description }}"
+                        data-amount="{{ stripe_charge }}"
+                        data-locale="{{ stripe_locale }}">
+                    </script>
+                  </form>
+                {% endif %}
+              {% else %}
+                <a class="mr-2" href="{% url 'login' %}?next={{request.path}}">Login to Purchase</a>
+              {% endif %}
+            {% else %}
+              <p>This class has already been purchased</p>
             {% endif %}
           {% else %}
-            <a class="mr-2" href="{% url 'login' %}?next={{request.path}}">Login to Purchase</a>
+            <p class="article-content"><br>{{ object.content }} <br>
+            {% if object.is_one_on_one %}
+              Take this one on one class! Buy below
+            {% elif object.is_stream %}
+              {% if object.is_purchase %}
+                Watch this stream! Buy below
+              {% else %}
+                Watch this stream for Free!
+              {% endif %}
+            {% elif object.is_video %}
+              Watch this video! Buy below
+            {% endif %}
+            </p>
+            <h2>Buy for <strong>${{ stripe_charge_dollars }}.{{ stripe_charge_cents }}</strong>!</h2>
+            {% if user.is_authenticated %}
+              {% if object.author != user %}
+                <form action="{% url 'payments-charge' object.author.username object.id %}" method="post">
+                  {% csrf_token %}
+                  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                      data-key="{{ key }}"
+                      data-description="{{ stripe_description }}"
+                      data-amount="{{ stripe_charge }}"
+                      data-locale="{{ stripe_locale }}">
+                  </script>
+                </form>
+              {% endif %}
+            {% else %}
+              <a class="mr-2" href="{% url 'login' %}?next={{request.path}}">Login to Purchase</a>
+            {% endif %}
           {% endif %}
         {% endif %}
         {% if user.is_authenticated %}
-          {% if object.is_video %}
-            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'class-video' object.id %}">Watch This Video</a>
+          {% if purchased_or_is_author %}
+            {% if object.is_video %}
+              <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'class-video' object.id %}">Watch This Video</a>
+            {% endif %}
+            {% if object.is_one_on_one %}
+              {% if not has_not_been_purchased %}
+                {% if object.author == user %}
+                  <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'video-call' user_who_purchased.username %}">Start the Video Call</a>
+                {% endif %}
+                {% if user == user_who_purchased %}
+                  <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'video-call' object.author.username %}">Start the Video Call</a>
+                {% endif %}
+              {% endif %}
+            {% endif %}
           {% endif %}
         {% endif %}
       </div>
