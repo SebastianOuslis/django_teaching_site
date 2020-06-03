@@ -6,7 +6,7 @@
     One on One: <br>
     These classes are meant to replicate a one on one setting with a student. This allows for the most connection between the instructor and the student. When the class starts, the teacher and the student will have a video call together. <br>
     This type of class can have a maximum of one student at a time. The first person to purchase the class will be the student. <br>
-    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'create_one_on_one' %}">Create a One on One Class</a> <br> <br>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'one_on_one_choose_pay' %}">Create a One on One Class</a> <br> <br>
     Live-stream: ** Currently In Development ** <br>
     <!--
     These classes are meant to replicate a group lesson environment. Live-streamed classes allow for an instructor to teach many students at the same time. <br>
@@ -19,6 +19,6 @@
     Pre-uploaded videos: <br>
     These classes are meant for instructors who have already recorded their classes and want students to watch these videos. <br>
     Students that have purchased the class can watch the video at any time. <br>
-    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'create_video' %}">Create a Video Class</a> </p>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'video_choose_pay' %}">Create a Video Class</a> </p>
 </article>
 {% endblock %}

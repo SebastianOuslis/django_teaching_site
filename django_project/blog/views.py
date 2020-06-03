@@ -303,6 +303,8 @@ class ClassVideoView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     def test_func(self):
         class_object = get_object_or_404(ClassRoot, id=self.kwargs.get('pk'))
         if class_object.is_video:
+            if not class_object.is_purchase:
+                return True
             if self.request.user == get_object_or_404(User, username=class_object.author.username):
                 return True
             list_of_titles = [d.post_bought_from_title for d in
@@ -340,6 +342,17 @@ class VideoView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
 
     def handle_no_permission(self):
         return redirect('profile')
+
+class VideoView(LoginRequiredMixin, TemplateView):
+    template_name = 'blog/open_video_call.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = self.kwargs.get('classTitle')
+        return context
+
+    def handle_no_permission(self):
+        return redirect('home')
 
 class TextChatView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     template_name = 'blog/user_chat.html'

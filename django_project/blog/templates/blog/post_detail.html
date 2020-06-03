@@ -97,19 +97,28 @@
           {% endif %}
         {% endif %}
         {% if user.is_authenticated %}
-          {% if purchased_or_is_author %}
+          {% if object.is_purchase %}
+            {% if purchased_or_is_author %}
+              {% if object.is_video %}
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'class-video' object.id %}">Watch This Video</a>
+              {% endif %}
+              {% if object.is_one_on_one %}
+                {% if not has_not_been_purchased %}
+                  {% if object.author == user %}
+                    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'video-call' user_who_purchased.username %}">Start the Video Call</a>
+                  {% endif %}
+                  {% if user == user_who_purchased %}
+                    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'video-call' object.author.username %}">Start the Video Call</a>
+                  {% endif %}
+                {% endif %}
+              {% endif %}
+            {% endif %}
+          {% else %}
             {% if object.is_video %}
               <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'class-video' object.id %}">Watch This Video</a>
             {% endif %}
             {% if object.is_one_on_one %}
-              {% if not has_not_been_purchased %}
-                {% if object.author == user %}
-                  <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'video-call' user_who_purchased.username %}">Start the Video Call</a>
-                {% endif %}
-                {% if user == user_who_purchased %}
-                  <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'video-call' object.author.username %}">Start the Video Call</a>
-                {% endif %}
-              {% endif %}
+              <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'open-video-call' object.title %}">Start the Video Call</a>
             {% endif %}
           {% endif %}
         {% endif %}

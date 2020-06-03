@@ -1,0 +1,52 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% block scripts %}
+<script type='text/javascript' src='https://cdn.scaledrone.com/scaledrone.min.js'></script>
+{% endblock scripts %}
+{% block style %}
+<style>
+    body {
+      display: flex;
+      height: 100vh;
+      margin: 0;
+      align-items: center;
+      justify-content: center;
+      padding: 0 50px;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    video {
+      margin: 0 50px;
+      box-sizing: border-box;
+      border-radius: 2px;
+      padding: 0;
+      box-shadow: rgba(156, 172, 172, 0.2) 0px 2px 2px, rgba(156, 172, 172, 0.2) 0px 4px 4px, rgba(156, 172, 172, 0.2) 0px 8px 8px, rgba(156, 172, 172, 0.2) 0px 16px 16px, rgba(156, 172, 172, 0.2) 0px 32px 32px, rgba(156, 172, 172, 0.2) 0px 64px 64px;
+    }
+    .copy {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 16px;
+      color: rgba(0, 0, 0, 0.5);
+    }
+</style>
+{% endblock style %}
+{% block data_in_body %}
+page_user_username="{{ title }}" user_username="{{ title }}"
+{% endblock data_in_body %}
+{% block video_call%}
+  <div class="row">
+      <video width='600' id="remoteVideo" autoplay controls></video>
+      <video width='200' id="localVideo" autoplay muted></video>
+  </div>
+  <script>
+    var page_user_username = "{{ title }}";
+    var user_username = "{{ title }}";
+  </script>
+  <!--
+  max-width: calc(50% - 100px);
+  import seedrandom from online
+  -->
+  <script src=//cdnjs.cloudflare.com/ajax/libs/seedrandom/2.3.10/seedrandom.min.js></script>
+  <script src="{% static 'js/video_chat.js'%}"></script>
+{% endblock video_call %}

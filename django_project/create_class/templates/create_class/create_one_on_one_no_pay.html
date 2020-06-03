@@ -1,0 +1,17 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content%}
+<h1>Create Free One on One Class</h1>
+<div>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <fieldset class="form-group">
+        {{ class_create_form|crispy }}
+        {{ time_form|crispy }}
+    </fieldset>
+    <div class="form-group">
+        <button class="btn btn-outline-info" type="submit">Create Class</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

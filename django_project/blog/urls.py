@@ -19,6 +19,7 @@ urlpatterns = [
     path('review/create/<str:username>', ReviewCreateView.as_view(success_url=reverse_lazy('blog-home')), name='create-review'),
     path('review/<str:username>', UserReviewList.as_view(), name='user-review'),
     path('video/<str:username>', VideoView.as_view(), name='video-call'),
+    path('open_video/<str:classTitle>', VideoView.as_view(), name='open-video-call'),
     path('chat/<str:username>', TextChatView.as_view(), name='text-chat'),
     path('about/', views.about, name='blog-about'),
 

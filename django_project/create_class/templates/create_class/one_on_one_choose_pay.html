@@ -1,0 +1,11 @@
+{% extends "blog/base.html" %}
+{% block content%}
+<h1>One on One Class Step 2</h1>
+<article class="media content-section">
+    <p>You can now chose if your One on One class requires students to pay or if it is free for anyone to join.<br>
+    Payed Class:<br>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'create_one_on_one_pay' %}">Create Payed One on One</a> <br> <br>
+    Free Class: <br>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'create_one_on_one_no_pay' %}">Create Free One on One</a> </p>
+</article>
+{% endblock %}

@@ -164,6 +164,44 @@ class CreateClassOneToOnePay(LoginRequiredMixin, UserPassesTestMixin, TemplateVi
     def handle_no_permission(self):
         return redirect('home')
 
+class CreateClassOneToOneNoPay(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+    def post(self, request, *args, **kwargs):
+        class_root_form = ClassRootCreate(request.POST, prefix='class_form')
+        time_form = CreateTimeForClass(request.POST, prefix='time_form')
+        if class_root_form.is_valid() and time_form.is_valid():
+            class_root_object = ClassRoot(title=class_root_form.cleaned_data.get('title'), content=class_root_form.cleaned_data.get('content'), author=self.request.user, author_profile=self.request.user.profile,
+                                            category=class_root_form.cleaned_data.get('category'), is_purchase=False, is_one_on_one=True, is_stream=False, is_video=False)
+            class_root_object.save()
+            time_object = TimeForClass(classroot=class_root_object,
+                                       time_of_day=time_form.cleaned_data.get('time_of_day'),
+                                       date=time_form.cleaned_data.get('date'))
+            time_object.save()
+            oneonone_object = ClassOneOnOneInfo(classroot=class_root_object, class_time=time_object)
+            oneonone_object.save()
+            messages.success(self.request,
+                             f'You have made a payed one on one class')
+            return redirect('home')
+        else:
+            print("failed")
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        class_create_form = ClassRootCreate(prefix='class_form')
+        time_form = CreateTimeForClass(prefix='time_form')
+        context['class_create_form'] = class_create_form
+        context['time_form'] = time_form
+        return context
+
+    def test_func(self):
+        list_of_instructor_usernames = [d['user_username'] for d in list(ListOfInstructors.objects.values('user_username')) if 'user_username' in d]
+        if self.request.user.username in list_of_instructor_usernames:
+            return True
+        messages.warning(self.request, f'You must be an instructor to create a class, please contact us to make you an instructor')
+        return False
+
+    def handle_no_permission(self):
+        return redirect('home')
+
 class CreateClassVideoPay(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     def post(self, request, *args, **kwargs):
         class_root_form = ClassRootCreate(request.POST, prefix='class_form')
@@ -191,6 +229,40 @@ class CreateClassVideoPay(LoginRequiredMixin, UserPassesTestMixin, TemplateView)
         context['class_create_form'] = class_create_form
         context['video_form'] = video_form
         context['purchase_form'] = purchase_form
+        return context
+
+    def test_func(self):
+        list_of_instructor_usernames = [d['user_username'] for d in list(ListOfInstructors.objects.values('user_username')) if 'user_username' in d]
+        if self.request.user.username in list_of_instructor_usernames:
+            return True
+        messages.warning(self.request, f'You must be an instructor to create a class, please contact us to make you an instructor')
+        return False
+
+    def handle_no_permission(self):
+        return redirect('home')
+
+class CreateClassVideoNoPay(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+    def post(self, request, *args, **kwargs):
+        class_root_form = ClassRootCreate(request.POST, prefix='class_form')
+        video_form = CreateVideoInfo(request.POST, request.FILES, prefix='video_form')
+        if class_root_form.is_valid() and video_form.is_valid():
+            class_root_object = ClassRoot(title=class_root_form.cleaned_data.get('title'), content=class_root_form.cleaned_data.get('content'), author=self.request.user, author_profile=self.request.user.profile,
+                                            category=class_root_form.cleaned_data.get('category'), is_purchase=False, is_one_on_one=False, is_stream=False, is_video=True)
+            class_root_object.save()
+            video_object = ClassVideoInfo(classroot=class_root_object, video_name=video_form.cleaned_data.get('video_name'), video_file=video_form.cleaned_data.get('video_file'))
+            video_object.save()
+            messages.success(self.request,
+                             f'You have made a payed video class')
+            return redirect('home')
+        else:
+            print("failed")
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        class_create_form = ClassRootCreate(prefix='class_form')
+        video_form = CreateVideoInfo(prefix='video_form')
+        context['class_create_form'] = class_create_form
+        context['video_form'] = video_form
         return context
 
     def test_func(self):

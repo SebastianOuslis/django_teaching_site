@@ -1,0 +1,11 @@
+{% extends "blog/base.html" %}
+{% block content%}
+<h1>Video Class Step 2</h1>
+<article class="media content-section">
+    <p>You can now chose if your Video class requires students to pay or if it is free for anyone to watch.<br>
+    Payed Class:<br>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'create_video_pay' %}">Create Payed Video</a> <br> <br>
+    Free Class: <br>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'create_video_no_pay' %}">Create Free Video</a> </p>
+</article>
+{% endblock %}
