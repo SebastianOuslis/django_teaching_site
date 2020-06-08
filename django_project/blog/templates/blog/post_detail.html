@@ -9,6 +9,12 @@
             <a class="post-category" href="{% url 'post-category' object.category %}">{{ object.category }}</a>
             <div class="spacing">
               <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
+              {% if user.is_authenticated %}
+                {% if object.author == user %}
+                  <a class="btn btn-outline-secondary" href="{% url 'post-update' object.id %}">Update Class</a>
+                  <a class="btn btn-outline-danger" href="{% url 'post-delete' object.id %}">Delete Class</a>
+                {% endif %}
+              {% endif %}
             </div>
         </div>
         <h2 class="article-title">{{ object.title }}  ---
@@ -75,7 +81,9 @@
                 Watch this stream for Free!
               {% endif %}
             {% elif object.is_video %}
-              Watch this video! Buy below
+              {% if object.is_purchase %}
+                Watch this video! Buy below
+              {% endif %}
             {% endif %}
             </p>
             <h2>Buy for <strong>${{ stripe_charge_dollars }}.{{ stripe_charge_cents }}</strong>!</h2>
@@ -121,6 +129,8 @@
               <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'open-video-call' object.title %}">Start the Video Call</a>
             {% endif %}
           {% endif %}
+        {% else %}
+          <a class="mr-2" href="{% url 'login' %}?next={{request.path}}">Login to Watch the Class</a>
         {% endif %}
       </div>
     </article>

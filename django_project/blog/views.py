@@ -9,6 +9,7 @@ from django.conf import settings
 from users.models import Profile, ListOfInstructors
 from payments.models import Purchases
 from django.contrib import messages
+from create_class.forms import ClassRootCreate, CreateTimeForClass, CreatePurchaseInfo, CreateStreamInfo, CreateVideoInfo
 
 import stripe
 
@@ -199,28 +200,79 @@ class PostCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     def handle_no_permission(self):
         return redirect('blog-home')
 
-class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    model = Post
-    fields = ['title', 'content', 'category', 'is_purchase', 'type_of_class', 'initial_spots', 'cost']
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     template_name = 'blog/post_update.html'
 
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
+    def post(self, request, *args, **kwargs):
+        class_root_object = get_object_or_404(ClassRoot, id=self.kwargs.get('pk'))
+        class_root_form = ClassRootCreate(request.POST, prefix='class_form', instance=class_root_object)
+        forms = []
+        forms.append(class_root_form)
+        if class_root_object.is_purchase:
+            forms.append(CreatePurchaseInfo(request.POST, prefix='purchase_form', instance=get_object_or_404(ClassPurchaseInfo, classroot=class_root_object)))
+        if class_root_object.is_one_on_one:
+            forms.append(CreateTimeForClass(request.POST, prefix='time_form', instance=get_object_or_404(TimeForClass, classroot=class_root_object)))
+        if class_root_object.is_stream:
+            forms.append(CreateStreamInfo(request.POST, prefix='stream_form', instance=get_object_or_404(ClassStreamInfo, classroot=class_root_object)))
+            forms.append(CreateTimeForClass(request.POST, prefix='time_form', instance=get_object_or_404(TimeForClass, classroot=class_root_object)))
+        if class_root_object.is_video:
+            video_info = get_object_or_404(ClassVideoInfo, classroot=class_root_object)
+            forms.append(CreateVideoInfo(request.POST, prefix='video_form', instance=get_object_or_404(ClassVideoInfo, classroot=class_root_object)))
+        success_flag = True
+        for form in forms:
+            if not form.is_valid():
+                messages.warning(self.request,
+                                 f'You failed to update the class')
+                success_flag = False
+        if success_flag:
+            for form in forms:
+                form.save()
+            messages.success(self.request,
+                             f'You have updated the class')
+            return redirect('home')
+        else:
+            print("failed")
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        class_root_object = get_object_or_404(ClassRoot, id=self.kwargs.get('pk'))
+        forms = []
+        forms.append(ClassRootCreate(None, prefix='class_form', instance=class_root_object))
+        if class_root_object.is_purchase:
+            purchase_info = get_object_or_404(ClassPurchaseInfo, classroot=class_root_object)
+            forms.append(CreatePurchaseInfo(None, prefix='purchase_form', instance=purchase_info))
+        if class_root_object.is_one_on_one:
+            time_info = get_object_or_404(TimeForClass, classroot=class_root_object)
+            forms.append(CreateTimeForClass(None, prefix='time_form', instance=time_info))
+        if class_root_object.is_stream:
+            stream_info = get_object_or_404(ClassStreamInfo, classroot=class_root_object)
+            time_info = get_object_or_404(TimeForClass, classroot=class_root_object)
+            forms.append(CreateStreamInfo(None, prefix='stream_form', instance=stream_info))
+            forms.append(CreateTimeForClass(None, prefix='time_form', instance=time_info))
+        if class_root_object.is_video:
+            video_info = get_object_or_404(ClassVideoInfo, classroot=class_root_object)
+            forms.append(CreateVideoInfo(None, prefix='video_form', instance=video_info))
+        context["forms"] = forms
+        return context
 
     def test_func(self):
-        post = self.get_object()
-        if self.request.user == post.author:
+        class_root_object = get_object_or_404(ClassRoot, id=self.kwargs.get('pk'))
+        if self.request.user == get_object_or_404(User, username=class_root_object.author.username):
             return True
-        return False
+        else:
+            return False
+
+    def handle_no_permission(self):
+        return redirect('home')
+
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    model = Post
+    model = ClassRoot
     success_url = '/blog'
 
     def test_func(self):
-        post = self.get_object()
-        if self.request.user == post.author:
+        class_object = self.get_object()
+        if self.request.user == class_object.author:
             return True
         return False
 

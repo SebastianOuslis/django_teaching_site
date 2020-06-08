@@ -5,8 +5,10 @@
     <form method="POST">
         {% csrf_token %}
         <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Blog Post</legend>
-            {{ form|crispy }}
+            <legend class="border-bottom mb-4">Update Class</legend>
+            {% for class_form in forms %}
+                {{ class_form|crispy }}
+            {% endfor %}
         </fieldset>
         <div class="form-group">
             <button class="btn btn-outline-info" type="submit">Update</button>
