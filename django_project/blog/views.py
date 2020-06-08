@@ -10,6 +10,7 @@ from users.models import Profile, ListOfInstructors
 from payments.models import Purchases
 from django.contrib import messages
 from create_class.forms import ClassRootCreate, CreateTimeForClass, CreatePurchaseInfo, CreateStreamInfo, CreateVideoInfo
+from django.http import HttpResponseRedirect
 
 import stripe
 
@@ -220,9 +221,10 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
             forms.append(CreateVideoInfo(request.POST, prefix='video_form', instance=get_object_or_404(ClassVideoInfo, classroot=class_root_object)))
         success_flag = True
         for form in forms:
-            if not form.is_valid():
+            if not form.is_valid() and success_flag:
                 messages.warning(self.request,
-                                 f'You failed to update the class')
+                                 f'You failed to update the class with the following errors: {form.errors}')
+                return HttpResponseRedirect(self.request.path_info)
                 success_flag = False
         if success_flag:
             for form in forms:
@@ -232,6 +234,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
             return redirect('home')
         else:
             print("failed")
+            return HttpResponseRedirect(self.request.path_info)
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
