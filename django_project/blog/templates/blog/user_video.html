@@ -38,10 +38,57 @@ page_user_username="{{ page_user.username }}" user_username="{{ user.username }}
   <div class="row">
       <video width='600' id="remoteVideo" autoplay controls></video>
       <video width='200' id="localVideo" autoplay muted></video>
+      {% if class_object.author == user %}
+         <button id="button_end" class="btn btn-outline-danger">End the Video Call</button>
+      {% endif %}
   </div>
   <script>
     var page_user_username = "{{ page_user.username }}";
     var user_username = "{{ user.username }}";
+
+    var object_id = "{{ class_object.id }}";
+    var object_title = "{{ class_object.title }}";
+
+    function fn15sec() {
+      console.log("calling ajax every 15 seconds");
+      $.ajax({
+        url: '{% url "check_call" %}',
+        data: {
+          'pk': object_id
+        },
+        dataType: 'json',
+        success: function (data) {
+          console.log(data.is_started);
+          if (data.is_started == false) {
+            console.log('redirect to home');
+            window.location = "/";
+          } else {
+            console.log('video call is started');
+          }
+        }
+      });
+
+    };
+    fn15sec();
+    setInterval(fn15sec, 15*1000);
+
+    $("#button_end").click(function () {
+      console.log("calling ajax");
+      $.ajax({
+        url: '{% url "end_call" %}',
+        data: {
+          'pk': object_id
+        },
+        dataType: 'json',
+        success: function (data) {
+          console.log("end_call");
+          // redirect
+          console.log('/');
+          window.location = "/";
+        }
+      });
+
+    });
   </script>
   <!--
   max-width: calc(50% - 100px);

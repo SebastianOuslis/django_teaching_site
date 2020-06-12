@@ -113,10 +113,10 @@
               {% if object.is_one_on_one %}
                 {% if not has_not_been_purchased %}
                   {% if object.author == user %}
-                    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'video-call' user_who_purchased.username %}">Start the Video Call</a>
+                    <button id="button_start_payed" class="btn btn-secondary btn-sm mt-1 mb-1">Start the Video Call</button>
                   {% endif %}
                   {% if user == user_who_purchased %}
-                    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'video-call' object.author.username %}">Start the Video Call</a>
+                    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'video-call' object.title object.author.username %}">Join the Video Call</a>
                   {% endif %}
                 {% endif %}
               {% endif %}
@@ -126,7 +126,11 @@
               <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'class-video' object.id %}">Watch This Video</a>
             {% endif %}
             {% if object.is_one_on_one %}
-              <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'open-video-call' object.title %}">Start the Video Call</a>
+              {% if object.author == user %}
+                <button id="button_start" class="btn btn-secondary btn-sm mt-1 mb-1">Start the Video Call</button>
+              {% else %}
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'open-video-call' object.title %}">Join the Video Call</a>
+              {% endif %}
             {% endif %}
           {% endif %}
         {% else %}
@@ -134,4 +138,43 @@
         {% endif %}
       </div>
     </article>
+    <script>
+    var object_id = "{{ object.id }}";
+    var object_title = "{{ object.title }}";
+    $("#button_start").click(function () {
+      console.log("calling ajax");
+      $.ajax({
+        url: '{% url "start_call" %}',
+        data: {
+          'pk': object_id
+        },
+        dataType: 'json',
+        success: function (data) {
+          console.log("start_call");
+          // redirect
+          console.log('/');
+          window.location = "{% url 'open-video-call' object.title %}";
+        }
+      });
+
+    });
+
+    $("#button_start_payed").click(function () {
+      console.log("calling ajax");
+      $.ajax({
+        url: '{% url "start_call" %}',
+        data: {
+          'pk': object_id
+        },
+        dataType: 'json',
+        success: function (data) {
+          console.log("start_call");
+          // redirect
+          console.log('/');
+          window.location = "{% url 'video-call' object.title object.author.username %}";
+        }
+      });
+
+    });
+    </script>
 {% endblock content %}

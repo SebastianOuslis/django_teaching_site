@@ -11,6 +11,7 @@ from payments.models import Purchases
 from django.contrib import messages
 from create_class.forms import ClassRootCreate, CreateTimeForClass, CreatePurchaseInfo, CreateStreamInfo, CreateVideoInfo
 from django.http import HttpResponseRedirect
+from django.http import JsonResponse
 
 import stripe
 
@@ -380,7 +381,7 @@ class ClassVideoView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
 
 #video calling stuffs
 
-class VideoView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+class VideoView_payed(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     template_name = 'blog/user_video.html'
 
     def get_context_data(self, *args, **kwargs):
@@ -388,6 +389,8 @@ class VideoView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
         page_user = get_object_or_404(User, username=self.kwargs.get('username'))
         context['page_user'] = page_user
         context['user'] = self.request.user
+        context['class_object'] = get_object_or_404(ClassRoot, title=self.kwargs.get('classTitle'))
+        context['title'] = self.kwargs.get('classTitle')
         return context
 
     def test_func(self):
@@ -398,12 +401,15 @@ class VideoView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     def handle_no_permission(self):
         return redirect('profile')
 
-class VideoView(LoginRequiredMixin, TemplateView):
+class VideoView_free(LoginRequiredMixin, TemplateView):
     template_name = 'blog/open_video_call.html'
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['class_object'] = get_object_or_404(ClassRoot, title=self.kwargs.get('classTitle'))
         context['title'] = self.kwargs.get('classTitle')
+        context['page_user'] = context['class_object'].author
+        context['user'] = self.request.user
         return context
 
     def handle_no_permission(self):
@@ -426,3 +432,40 @@ class TextChatView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
 
     def handle_no_permission(self):
         return redirect('profile')
+
+
+class OneOnOneVideoAgora(LoginRequiredMixin, TemplateView):
+    template_name = 'blog/agora_video_chat.html'
+
+
+### ajaxs
+def set_video_call_start(request):
+    pk_for_classroot = request.GET.get('pk', None)
+    ClassOneOnOneInfo.objects.filter(classroot=get_object_or_404(ClassRoot, id=pk_for_classroot)).update(started=True)
+    messages.success(request,
+                     f'You have started the video class')
+    data = {
+        'pk_for_class': pk_for_classroot
+    }
+    return JsonResponse(data)
+
+
+def set_video_call_end(request):
+    pk_for_classroot = request.GET.get('pk', None)
+    ClassOneOnOneInfo.objects.filter(classroot=get_object_or_404(ClassRoot, id=pk_for_classroot)).update(started=False)
+    messages.success(request,
+                     f'You have ended the video class')
+    data = {
+        'pk_for_class': pk_for_classroot
+    }
+    return JsonResponse(data)
+
+
+def validate_video_call(request):
+    pk_for_classroot = request.GET.get('pk', None)
+    data = {
+        'is_started': ClassOneOnOneInfo.objects.filter(classroot=get_object_or_404(ClassRoot, id=pk_for_classroot), started=True).exists()
+    }
+    if not data['is_started']:
+        messages.success(request, f'The One on One class has not started yet, or the instructor has ended the class. If something went wrong, please contact admin@nxtklass.com')
+    return JsonResponse(data)

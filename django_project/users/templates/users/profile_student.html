@@ -6,24 +6,7 @@
         <img class="rounded-circle account-img" src="{{ user.profile.image.url}}">
         <div class="media-body">
           <h2 class="account-heading">{{ user.profile.full_name }}</h2>
-          <h2 class="account-heading">{{ user.profile.short_description }}</h2>
-          {% if user.profile.instagram_handle != "" or user.profile.youtube_channel != "" %}
-            <p class="text-secondary">
-              {% if user.profile.instagram_handle != "" %}
-                <i class="fab fa-2x fa-instagram"></i> @{{ user.profile.instagram_handle }}
-              {% endif %}
-              {% if user.profile.youtube_channel != "" %}
-                <i class="fab fa-2x fa-youtube"></i> {{ user.profile.youtube_channel }}
-              {% endif %}
-            </p>
-          {% endif %}
-
           <p class="text-secondary">Email: {{ user.email }} Username: {{ user.username }}</p>
-          <p class="article-content">{{ user.profile.description }}</p>
-          {% if user.profile.youtube_short_link != "" %}
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{user.profile.youtube_short_link}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-            </iframe>
-          {% endif %}
         </div>
       </div>
     </div>

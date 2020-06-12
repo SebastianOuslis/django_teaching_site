@@ -38,15 +38,62 @@ page_user_username="{{ title }}" user_username="{{ title }}"
   <div class="row">
       <video width='600' id="remoteVideo" autoplay controls></video>
       <video width='200' id="localVideo" autoplay muted></video>
+      {% if class_object.author == user %}
+         <button id="button_end" class="btn btn-outline-danger">End the Video Call</button>
+      {% endif %}
   </div>
-  <script>
+    <script>
     var page_user_username = "{{ title }}";
     var user_username = "{{ title }}";
-  </script>
-  <!--
-  max-width: calc(50% - 100px);
-  import seedrandom from online
-  -->
-  <script src=//cdnjs.cloudflare.com/ajax/libs/seedrandom/2.3.10/seedrandom.min.js></script>
-  <script src="{% static 'js/video_chat.js'%}"></script>
+
+    var object_id = "{{ class_object.id }}";
+    var object_title = "{{ class_object.title }}";
+
+    function fn15sec() {
+      console.log("calling ajax every 15 seconds");
+      $.ajax({
+        url: '{% url "check_call" %}',
+        data: {
+          'pk': object_id
+        },
+        dataType: 'json',
+        success: function (data) {
+          console.log(data.is_started);
+          if (data.is_started == false) {
+            console.log('redirect to home');
+            window.location = "/";
+          } else {
+            console.log('video call is started');
+          }
+        }
+      });
+
+    };
+    fn15sec();
+    setInterval(fn15sec, 15*1000);
+
+    $("#button_end").click(function () {
+      console.log("calling ajax");
+      $.ajax({
+        url: '{% url "end_call" %}',
+        data: {
+          'pk': object_id
+        },
+        dataType: 'json',
+        success: function (data) {
+          console.log("end_call");
+          // redirect
+          console.log('/');
+          window.location = "/";
+        }
+      });
+
+    });
+    </script>
+    <!--
+    max-width: calc(50% - 100px);
+    import seedrandom from online
+    -->
+    <script src=//cdnjs.cloudflare.com/ajax/libs/seedrandom/2.3.10/seedrandom.min.js></script>
+    <script src="{% static 'js/video_chat.js'%}"></script>
 {% endblock video_call %}

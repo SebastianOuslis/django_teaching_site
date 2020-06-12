@@ -127,6 +127,7 @@ class ClassPurchaseInfo(models.Model):
 class ClassOneOnOneInfo(models.Model):
     classroot = models.ForeignKey(ClassRoot, on_delete=models.CASCADE)
     class_time = models.ForeignKey(TimeForClass, null=True, default=None, on_delete=models.SET_DEFAULT)
+    started = models.BooleanField(default=False)
 
 
 class ClassStreamInfo(models.Model):
