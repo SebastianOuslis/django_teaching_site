@@ -3,16 +3,18 @@
     <div>
         <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'profile' %}">Profile</a>
         <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'purchases' %}">Purchases</a>
-        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'user-posts' user.username %}">Posts</a>
-        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'sales' %}">Sales</a>
+        {% if is_instructor %}
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'user-posts' user.username %}">Posts</a>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'sales' %}">Sales</a>
+        {% endif %}
     </div>
-    <h1 class="mb-3">Sales by {{ user.username }} ({{ page_obj.paginator.count}})</h1>
-    {% for sale in sales %}
+    <h1 class="mb-3">Your Purchases ({{ page_obj.paginator.count}})</h1>
+    {% for purchase in purchases %}
         <article class="media content-section">
           <div class="media-body">
-              <p class="article-content">{{ sale.user_bought_by_username }} bought post "{{ sale.post_bought_from_title }}" for {{ sale.dollars_string }}.{{ sale.cents_string }}$ {{ sale.currency|upper }} on {{ sale.date_bought }}</p>
-              {% if sale.post_bought_from is not None %}
-                  <br><a href="{% url 'post-detail' sale.post_bought_from.id %}">Go to "{{ sale.post_bought_from_title }}"</a>
+              <p class="article-content">You bought the class "{{ purchase.post_bought_from_title }}" for {{ purchase.dollars_string }}.{{ purchase.cents_string }}$ {{ purchase.currency|upper }} on {{ purchase.date_bought }} </p>
+              {% if purchase.post_bought_from is not None %}
+                  <br><a href="{% url 'post-detail' purchase.post_bought_from.id %}">Go to "{{ purchase.post_bought_from_title }}"</a>
               {% endif %}
           </div>
         </article>

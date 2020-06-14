@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from users import views as user_views
-from users.views import UserSalesListView
+from users.views import UserSalesListView, UserPurchasesListView
 from payments import views as payment_views
 from blog.views import HomeView
 from django.conf import settings
@@ -44,6 +44,7 @@ urlpatterns = [
     path('profile/', user_views.ProfileUpdateViewInstructor.as_view(template_name='users/profile.html'), name='profile'),
     path('profile_student/', user_views.ProfileUpdateViewStudent.as_view(template_name='users/profile_student.html'), name='profile_student'),
     path('profile/sales', login_required(UserSalesListView.as_view()), name='sales'),
+    path('profile/purchases', login_required(UserPurchasesListView.as_view()), name='purchases'),
     path('payments/', include('payments.urls'))
 ]
 

@@ -1,6 +1,10 @@
 {% extends "blog/base.html" %}
 {% load crispy_forms_tags %}
 {% block content%}
+    <div>
+        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'profile' %}">Profile</a>
+        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'purchases' %}">Purchases</a>
+    </div>
     <div class="content-section">
       <div class="media">
         <img class="rounded-circle account-img" src="{{ user.profile.image.url}}">

@@ -113,6 +113,25 @@ class UserSalesListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     def handle_no_permission(self):
         return redirect('profile')
 
+class UserPurchasesListView(LoginRequiredMixin, ListView):
+    model = Purchases
+    template_name = 'users/user_purchases.html'
+    context_object_name = 'purchases'
+    paginate_by = 5
+
+    def get_queryset(self):
+        return Purchases.objects.filter(user_bought_by=self.request.user).order_by('-date_bought')
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        list_of_instructor_usernames = [d['user_username'] for d in
+                                        list(ListOfInstructors.objects.values('user_username')) if 'user_username' in d]
+        if self.request.user.username in list_of_instructor_usernames:
+            context["is_instructor"] = True
+        else:
+            context["is_instructor"] = False
+        return context
+
 
 def handler404(request, *args, **kwargs):
     return render(request, 'users/404.html', locals())
