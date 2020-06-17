@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 from PIL import Image
 from django.core.validators import RegexValidator
 import re
@@ -43,6 +44,25 @@ class ListOfInstructors(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     user_username = models.TextField(default='')
 
+    def __str__(self):
+        return f'Instructor {self.user.username}'
+
     def save(self, *args, **kwargs):
         self.user_username = self.user.username
         super().save(*args, **kwargs)
+
+
+class SignupInstructorList(models.Model):
+    user_requesting = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_username = models.TextField(default='')
+    date_posted = models.DateTimeField(default=timezone.now)
+    contact_email = models.EmailField()
+    request_info = models.CharField(max_length=150, default='What are you passionate about teaching?')
+
+    def __str__(self):
+        return f'{self.user_requesting.username} is requesting instructor status'
+
+    def save(self, *args, **kwargs):
+        self.user_username = self.user_requesting.username
+        super().save(*args, **kwargs)
+

@@ -184,6 +184,7 @@ class PostSalesView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
             return True
         return False
 
+# not used anymore
 class PostCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Post
     fields = ['title', 'content', 'category', 'is_purchase', 'type_of_class', 'initial_spots', 'cost']

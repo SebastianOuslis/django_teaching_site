@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateFormInstructor, ProfileUpdateFormStudent
-from django.views.generic import ListView, UpdateView
+from .forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateFormInstructor, ProfileUpdateFormStudent, SignupInstructorForm
+from django.views.generic import ListView, UpdateView, TemplateView
 from payments.models import Purchases
 from django.contrib.auth.models import User
-from .models import Profile, ListOfInstructors
+from .models import Profile, ListOfInstructors, SignupInstructorList
 from django.urls import reverse_lazy
 from django.template import RequestContext
 
@@ -131,6 +131,41 @@ class UserPurchasesListView(LoginRequiredMixin, ListView):
         else:
             context["is_instructor"] = False
         return context
+
+class InstructorSignupPage(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+    def post(self, request, *args, **kwargs):
+        signup_instructor_form = SignupInstructorForm(request.POST)
+        if signup_instructor_form.is_valid():
+            signup_object = SignupInstructorList(user_requesting=self.request.user, request_info=signup_instructor_form.cleaned_data.get('request_info'))
+            signup_object.save()
+            messages.success(self.request,
+                             f'You have been added to the instructor signup list, we will get in contact with you after we have reviewed your application, you may be emailed for more information')
+            return redirect('home')
+        else:
+            print("failed")
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        signup_instructor_form = SignupInstructorForm()
+        context['signup_instructor_form'] = signup_instructor_form
+        return context
+
+    def test_func(self):
+        list_of_instructor_usernames = [d['user_username'] for d in list(ListOfInstructors.objects.values('user_username')) if 'user_username' in d]
+        if self.request.user.username in list_of_instructor_usernames:
+            messages.warning(self.request,
+                             f'You are already an instructor')
+            return False
+        list_of_signup_usernames = [d['user_username'] for d in
+                                        list(SignupInstructorList.objects.values('user_username')) if 'user_username' in d]
+        if self.request.user.username in list_of_signup_usernames:
+            messages.warning(self.request,
+                             f'You are already on the signup list')
+            return False
+        return True
+
+    def handle_no_permission(self):
+        return redirect('home')
 
 
 def handler404(request, *args, **kwargs):
