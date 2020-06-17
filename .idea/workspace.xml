@@ -20,16 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="708304ce-202a-47a7-90dd-97f8b5275e00" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/django_project/users/templates/users/instructor_signup.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/django_project/blog/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/blog/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/django_project/django_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/django_project/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/django_project/django_project/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/django_project/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/django_project/users/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/users/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/django_project/users/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/users/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/django_project/users/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/users/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/django_project/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/users/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
