@@ -25,14 +25,11 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 class HomeView(ListView):
     model = ClassRoot
-    template_name = 'blog/home.html'
-    context_object_name = 'classes'
-    ordering = ['-date_posted']
-    paginate_by = 5
+    template_name = 'blog/newhome.html'
 
 class PostListView(ListView):
     model = ClassRoot
-    template_name = 'blog/home.html'
+    template_name = 'blog/classes_list.html'
     context_object_name = 'classes'
     ordering = ['-date_posted']
     paginate_by = 5

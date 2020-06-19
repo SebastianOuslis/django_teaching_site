@@ -20,8 +20,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="708304ce-202a-47a7-90dd-97f8b5275e00" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/django_project/blog/static/images_for_home/martialarts.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/django_project/blog/static/images_for_home/musician.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/django_project/blog/static/images_for_home/yoga.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/django_project/blog/static/images_for_home/yogas.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/django_project/blog/templates/blog/classes_list.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/django_project/blog/templates/blog/newhome.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/django_project/django_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/django_project/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_project/blog/templates/blog/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/blog/templates/blog/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_project/blog/templates/blog/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/blog/templates/blog/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_project/blog/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/blog/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,17 +52,19 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/data/ssl" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Sebastian\Documents\GitHub\django_teaching_site\data\ssl" />
-      <recent name="C:\Users\Sebastian\Documents\GitHub\django_teaching_site\config" />
-      <recent name="C:\Users\Sebastian\Documents\GitHub\django_teaching_site\django_project\media" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Sebastian\Documents\GitHub\django_teaching_site\data\ssl" />
       <recent name="C:\Users\Sebastian\Documents\GitHub\django_teaching_site\config\nginx" />
       <recent name="C:\Users\Sebastian\Documents\GitHub\django_teaching_site\django_project\blog\static\logoimg" />
       <recent name="C:\Users\Sebastian\Documents\GitHub\django_teaching_site\django_project\static\logoimg" />
       <recent name="C:\Users\Sebastian\Documents\GitHub\django_teaching_site\django_project" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Sebastian\Documents\GitHub\django_teaching_site\django_project\blog\static\images_for_home" />
+      <recent name="C:\Users\Sebastian\Documents\GitHub\django_teaching_site\django_project\blog\static" />
+      <recent name="C:\Users\Sebastian\Documents\GitHub\django_teaching_site\django_project\blog\templates\blog" />
+      <recent name="C:\Users\Sebastian\Documents\GitHub\django_teaching_site\django_project\blog\images_for_home" />
+      <recent name="C:\Users\Sebastian\Documents\GitHub\django_teaching_site\data\ssl" />
     </key>
   </component>
   <component name="SvnConfiguration">

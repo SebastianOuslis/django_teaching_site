@@ -1,0 +1,117 @@
+{% extends "blog/base.html" %}
+{% load static %}
+
+{% block style %}
+<style>
+    img {
+      width: 400px;
+      height: 400px;
+      object-fit: contain;
+    }
+</style>
+{% endblock style %}
+
+{% block content%}
+ <!---Secondary Navigation Bar --->
+<nav class="navbar navbar-expand-md navbar-light bg-light stick-top">
+<div class="container-fluid">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarResponsive">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Martial Arts</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Art</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Music</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Yoga</a>
+      </li>
+    </ul>
+  </div>
+</div>
+</nav>
+
+<!---Header Text -->
+<div class="container-fluid"> 
+<div class="row jumbotron text-center">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+    <p class="lead">Bringing teachers to students and students to teachers. Anywhere. Anytime.</p>
+  </div>
+</div>
+</div>
+
+<!---Three Picture Header --->
+<div class="container-fluid padding">
+  <div class="row text-center padding">
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <a href="#"> <img src="{% static 'images_for_home/yoga.png' %}"> </a>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <a href="#"> <img src="{% static 'images_for_home/martialarts.png' %}"> </a>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <a href="#"> <img src="{% static 'images_for_home/musician.jpg' %}"> </a>
+    </div>
+
+  </div>
+</div>
+
+<!---Header Text -->
+<div class="container-fluid"> 
+<div class="row jumbotron text-center">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+    <p class="lead">Some additional catchy thing.</p>
+  </div>
+</div>
+</div>
+
+<!--- Two Info Section-->
+<div class="container-fluid padding">
+<div class="row padding">
+  <div class="col-lg-6 col-md-6 col-sm-6">
+    <div class="info">
+      <p>Interested in becoming a student? <a href="#">Click Here</a></p>
+    </div>
+  </div>
+  <div class="col-lg-6 col-md-6 col-sm-6">
+    <p>Interested in becoming a teacher? <a href="#">Click Here</a></p>
+  </div>
+</div>
+</div>
+
+<!--- Footer -->
+<footer>
+<div class="container-fluid padding">
+<div class="row text-center">
+  <div class="col-md-6">
+    <img class="logoformat" src="{% static 'logoimg/logo2.png' %}">
+    <hr class="light">
+    <p>555-555-5555</p>
+    <p>admin@nxtklass.com</p>
+  </div>
+  <div class="col-md-6">
+    <hr class="light">
+    <h5>Our Hours</h5>
+    <hr class="light">
+    <p>Monday: 9 am</p>
+    <p>Saturday: 10 am</p>
+    <p>Sunday:closed</p>
+  </div>
+    <div class="col-12">
+      <hr class="light-100">
+      <h5>Cropywrite @NxtKlass 2020</h5>
+    </div>
+</div>
+</div>
+</footer>
+
+
+{% endblock content %}
