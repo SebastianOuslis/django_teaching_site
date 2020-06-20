@@ -16,24 +16,27 @@
 {% block content%}
  <!---Secondary Navigation Bar --->
 <nav class="navbar navbar-expand-md navbar-light bg-light stick-top">
-<div class="container-fluid">
-  <div class="navbar" id="navbarResponsive">
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'post-category' 'Karate' %}">Karate</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'post-category' 'Art' %}">Art</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'post-category' 'Music' %}">Music</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'post-category' 'Yoga' %}">Yoga</a>
-      </li>
-    </ul>
+  <div class="container-fluid">
+    <div class="navbar" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'blog-home' %}">All Classes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'post-category' 'Karate' %}">Karate</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'post-category' 'Art' %}">Art</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'post-category' 'Music' %}">Music</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'post-category' 'Yoga' %}">Yoga</a>
+        </li>
+      </ul>
+    </div>
   </div>
-</div>
 </nav>
 
 <!---Header Text -->
