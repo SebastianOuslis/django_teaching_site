@@ -2,35 +2,34 @@
 {% load static %}
 
 {% block style %}
+<!--
 <style>
     img {
-      width: 400px;
-      height: 400px;
+      width: 360px;
+      height: 450px;
       object-fit: contain;
     }
 </style>
+-->
 {% endblock style %}
 
 {% block content%}
  <!---Secondary Navigation Bar --->
 <nav class="navbar navbar-expand-md navbar-light bg-light stick-top">
 <div class="container-fluid">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarResponsive">
+  <div class="navbar" id="navbarResponsive">
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Martial Arts</a>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'post-category' 'Karate' %}">Karate</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Art</a>
+        <a class="nav-link" href="{% url 'post-category' 'Art' %}">Art</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Music</a>
+        <a class="nav-link" href="{% url 'post-category' 'Music' %}">Music</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Yoga</a>
+        <a class="nav-link" href="{% url 'post-category' 'Yoga' %}">Yoga</a>
       </li>
     </ul>
   </div>
@@ -42,23 +41,24 @@
 <div class="row jumbotron text-center">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
     <p class="lead">Bringing teachers to students and students to teachers. Anywhere. Anytime.</p>
+    <p class="lead">With NxtKlass, its easy to deliver classes to your community of students.</p>
   </div>
 </div>
 </div>
 
 <!---Three Picture Header --->
-<div class="container-fluid padding">
-  <div class="row text-center padding">
+<div class="container-fluid">
+  <div class="row text-center">
     <div class="col-xs-12 col-sm-6 col-md-4">
-      <a href="#"> <img src="{% static 'images_for_home/yoga.png' %}"> </a>
+      <a href="{% url 'post-category' 'Yoga' %}"> <img src="{% static 'images_for_home/yoga.png' %}" class="img-fluid"> </a>
     </div>
 
     <div class="col-xs-12 col-sm-6 col-md-4">
-      <a href="#"> <img src="{% static 'images_for_home/martialarts.png' %}"> </a>
+      <a href="{% url 'post-category' 'Karate' %}"> <img src="{% static 'images_for_home/martialarts.png' %}" class="img-fluid"> </a>
     </div>
 
     <div class="col-xs-12 col-sm-6 col-md-4">
-      <a href="#"> <img src="{% static 'images_for_home/musician.jpg' %}"> </a>
+      <a href="{% url 'post-category' 'Music' %}"> <img src="{% static 'images_for_home/musician.jpg' %}" class="img-fluid"> </a>
     </div>
 
   </div>
@@ -68,7 +68,7 @@
 <div class="container-fluid"> 
 <div class="row jumbotron text-center">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-    <p class="lead">Some additional catchy thing.</p>
+    <p class="lead">Start teaching for FREE! We offer Live One on One Video Calls and Pre-recorded video capabilities. You chose if your classes are free, or payed classes. </p>
   </div>
 </div>
 </div>
@@ -78,11 +78,11 @@
 <div class="row padding">
   <div class="col-lg-6 col-md-6 col-sm-6">
     <div class="info">
-      <p>Interested in becoming a student? <a href="#">Click Here</a></p>
+      <p>Interested in becoming a student? <a href="{% url 'login' %}">Click Here</a></p>
     </div>
   </div>
   <div class="col-lg-6 col-md-6 col-sm-6">
-    <p>Interested in becoming a teacher? <a href="#">Click Here</a></p>
+    <p>Interested in becoming a teacher? <a href="{% url 'instructor_signup' %}">Click Here</a></p>
   </div>
 </div>
 </div>
@@ -94,16 +94,16 @@
   <div class="col-md-6">
     <img class="logoformat" src="{% static 'logoimg/logo2.png' %}">
     <hr class="light">
-    <p>555-555-5555</p>
+    <h5>Start learning now!</h5>
+    <hr class="light">
     <p>admin@nxtklass.com</p>
   </div>
   <div class="col-md-6">
+    <img class="logoformat" src="{% static 'logoimg/logo2.png' %}">
     <hr class="light">
-    <h5>Our Hours</h5>
+    <h5>Start teaching right away!</h5>
     <hr class="light">
-    <p>Monday: 9 am</p>
-    <p>Saturday: 10 am</p>
-    <p>Sunday:closed</p>
+    <p> Support Line: 647-561-8058 </p>
   </div>
     <div class="col-12">
       <hr class="light-100">
