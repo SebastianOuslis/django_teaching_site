@@ -155,17 +155,17 @@ class InstructorSignupPage(LoginRequiredMixin, UserPassesTestMixin, TemplateView
         if self.request.user.username in list_of_instructor_usernames:
             messages.warning(self.request,
                              f'You are already an instructor')
-            return redirect('home')
+            return False
         list_of_signup_usernames = [d['user_username'] for d in
                                         list(SignupInstructorList.objects.values('user_username')) if 'user_username' in d]
         if self.request.user.username in list_of_signup_usernames:
             messages.warning(self.request,
                              f'You are already on the signup list')
-            return redirect('home')
+            return False
         return True
 
     def handle_no_permission(self):
-        return redirect('login')
+        return redirect('profile')
 
 
 def handler404(request, *args, **kwargs):
