@@ -179,7 +179,7 @@ class CreateClassOneToOneNoPay(LoginRequiredMixin, UserPassesTestMixin, Template
             oneonone_object = ClassOneOnOneInfo(classroot=class_root_object, class_time=time_object)
             oneonone_object.save()
             messages.success(self.request,
-                             f'You have made a payed one on one class')
+                             f'You have made a free one on one class')
             return redirect('home')
         else:
             print("failed")
@@ -252,7 +252,7 @@ class CreateClassVideoNoPay(LoginRequiredMixin, UserPassesTestMixin, TemplateVie
             video_object = ClassVideoInfo(classroot=class_root_object, video_name=video_form.cleaned_data.get('video_name'), video_file=video_form.cleaned_data.get('video_file'))
             video_object.save()
             messages.success(self.request,
-                             f'You have made a payed video class')
+                             f'You have made a free video class')
             return redirect('home')
         else:
             print("failed")
