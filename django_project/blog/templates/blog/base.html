@@ -6,7 +6,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
     <!-- Bootstrap CSS -->
@@ -16,7 +16,6 @@
     <!-- <link rel="stylesheet" href="{% static 'css/all.min.css'%}"> -->
 
     <script  src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" data-auto-a11y="true"></script>
-    <script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.1.0.js"></script>
 
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css'%}?{% now 'U' %}/">
 
@@ -46,36 +45,22 @@
 
           <a class="navbar-brand mr-4" href="{% url 'home' %}"><img class="logoformat" src="{% static 'logoimg/logo2.png' %}"></a>
 
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle">
+            <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
-            <!--
-            <div class="search-container">
-              <form class="video_callform-inline">
-                <i class="fas fa-search" aria-hidden="true"></i>
-                <input class="form-control form-control-sm ml-3 w-75"type="text" placeholder="Search Classes..." 
-                aria-label="Search">
-              </form>
-            </div>
-            -->
-
-
             <div class="navbar-nav ml-auto">
-              <a class="nav-item nav-link" href="{% url 'blog-home' %}">Classes</a>
-              <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
-            </div>
-            <!-- Navbar Right Side -->
-            <div class="navbar-nav">
+                <li><a class="nav-item nav-link" href="{% url 'blog-home' %}">Classes</a><li>
+                <li><a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a><li>
                 {% if user.is_authenticated %}
-                    <a class="nav-item nav-link" href="{% url 'instructor_signup' %}">Instructor Signup</a>
-                    <a class="nav-item nav-link" href="{% url 'create_class_step_one' %}">New Class</a>
-                    <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
-                    <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                    <li><a class="nav-item nav-link" href="{% url 'instructor_signup' %}">Instructor Signup</a><li>
+                    <li><a class="nav-item nav-link" href="{% url 'create_class_step_one' %}">New Class</a><li>
+                    <li><a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a><li>
+                    <li><a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a><li>
 
                 {% else %}
-                    <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
-                    <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                    <li><a class="nav-item nav-link" href="{% url 'register' %}">Register</a><li>
+                    <li><a class="nav-item nav-link" href="{% url 'login' %}">Login</a><li>
                 {% endif %}
             </div>
           </div>
@@ -114,9 +99,21 @@
             </p>
           </div>
         </div>
+
+            <div class="search-container">
+              <form class="video_callform-inline">
+                <i class="fas fa-search" aria-hidden="true"></i>
+                <input class="form-control form-control-sm ml-3 w-75"type="text" placeholder="Search Classes..."
+                aria-label="Search">
+              </form>
+            </div>
         --->
       </div>
     </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+
 
 </body>
 </html>
