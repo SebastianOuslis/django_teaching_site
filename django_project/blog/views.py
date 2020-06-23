@@ -440,8 +440,6 @@ class OneOnOneVideoAgora(LoginRequiredMixin, TemplateView):
 def set_video_call_start(request):
     pk_for_classroot = request.GET.get('pk', None)
     ClassOneOnOneInfo.objects.filter(classroot=get_object_or_404(ClassRoot, id=pk_for_classroot)).update(started=True)
-    messages.success(request,
-                     f'You have started the video class')
     data = {
         'pk_for_class': pk_for_classroot
     }

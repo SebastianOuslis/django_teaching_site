@@ -28,12 +28,31 @@
 page_user_username="{{ title }}" user_username="{{ title }}"
 {% endblock data_in_body %}
 {% block video_call%}
-  <div class="row">
-      <video class="VideoCall" width='600' id="remoteVideo" autoplay controls></video>
-      <video class="VideoCall" width='200' id="localVideo" autoplay muted></video>
+  <div class="container-fluid">
+    <div class="row text-center">
+      <br><br><br><br>
+    </div>
+    <div class="row text-center">
+      <br><br><br><br>
+    </div>
+    <div class="row text-center">
+      <br><br><h2 class="article-title">{{ title }}</h2><br><br>
+    </div>
+    <div class="row text-center">
+      <div class="col-xs-12 col-sm-12 col-md-12" >
+        <video class="VideoCall" width='800' id="remoteVideo" autoplay></video>
+      </div>
+    </div>
+    <div class="row text-center">
+      <div class="col-xs-12 col-sm-6 col-md-4">
+        <video class="VideoCall" width='200' id="localVideo" autoplay muted></video>
+      </div>
       {% if class_object.author == user %}
-         <button id="button_end" class="btn btn-outline-danger">End the Video Call</button>
+        <div class="col-xs-12 col-sm-6 col-md-4">
+          <button id="button_end" class="btn btn-outline-danger">End the Video Call</button>
+        </div>
       {% endif %}
+    </div>
   </div>
     <script>
     var page_user_username = "{{ title }}";
@@ -86,6 +105,18 @@ page_user_username="{{ title }}" user_username="{{ title }}"
     <!--
     max-width: calc(50% - 100px);
     import seedrandom from online
+
+    <div class="row">
+      <video class="VideoCall" width='600' id="remoteVideo" autoplay></video>
+      <video class="VideoCall" width='200' id="localVideo" autoplay muted></video>
+      {% if class_object.author == user %}
+         <button id="button_end" class="btn btn-outline-danger">End the Video Call</button>
+      {% endif %}
+    </div>
+
+    <div class="col-xs- col-sm-6 col-md-4">
+      <button id="button_full" class="btn btn-outline-secondary">Full Screen</button>
+    </div>
 
     video {
       margin: 0 50px;
