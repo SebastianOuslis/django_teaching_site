@@ -6,7 +6,7 @@ from django.views.generic import (
 from django.contrib.auth.models import User
 from .models import Category, Post, Review, ClassRoot, ClassPurchaseInfo, ClassOneOnOneInfo, ClassStreamInfo, ClassVideoInfo, TimeForClass
 from django.conf import settings
-from users.models import Profile, ListOfInstructors
+from users.models import Profile, ListOfInstructors, FollowingList
 from payments.models import Purchases
 from django.contrib import messages
 from create_class.forms import ClassRootCreate, CreateTimeForClass, CreatePurchaseInfo, CreateStreamInfo, CreateVideoInfo
@@ -34,7 +34,7 @@ class PostListView(ListView):
     ordering = ['-date_posted']
     paginate_by = 5
 
-class UserPostListView(ListView):
+class UserPostListView(UserPassesTestMixin, ListView):
     model = ClassRoot
     template_name = 'blog/user_posts.html'
     context_object_name = 'classes'
@@ -47,17 +47,55 @@ class UserPostListView(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         page_user = get_object_or_404(User, username=self.kwargs.get('username'))
+        if self.request.user.is_authenticated:
+            context['user_logged_in'] = True
+            context['user_username'] = self.request.user.username
+            following_users = [i.user_being_followed for i in
+                               FollowingList.objects.filter(user_doing_following=self.request.user)]
+            if page_user in following_users:
+                context['is_following'] = True
+            else:
+                context['is_following'] = False
+        else:
+            context['user_logged_in'] = False
         context['page_user'] = page_user
         return context
 
     def test_func(self):
         list_of_instructor_usernames = [d['user_username'] for d in list(ListOfInstructors.objects.values('user_username')) if 'user_username' in d]
-        if self.kwargs.get('username') in list_of_instructor_usernames:
+        user = get_object_or_404(User, username=self.kwargs.get('username'))
+        if user.username in list_of_instructor_usernames:
             return True
         return False
 
     def handle_no_permission(self):
         return redirect('home')
+
+
+class FollowingListView(LoginRequiredMixin, ListView):
+    model = ClassRoot
+    template_name = 'blog/following_posts.html'
+    context_object_name = 'classes'
+    paginate_by = 5
+
+    def get_queryset(self):
+        current_user = self.request.user
+        following_users = [i.user_being_followed for i in FollowingList.objects.filter(user_doing_following=current_user)]
+        print(following_users)
+        qs1 = ClassRoot.objects.filter(author=current_user).order_by('-date_posted')
+        for following_user in following_users:
+            qs2 = ClassRoot.objects.filter(author=following_user).order_by('-date_posted')
+            qs1 = qs1.union(qs2)
+        return qs1.order_by('-date_posted')
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['current_user'] = self.request.user
+        return context
+
+    def handle_no_permission(self):
+        return redirect('home')
+
 
 class CategoryPostListView(ListView):
     model = ClassRoot
@@ -68,6 +106,7 @@ class CategoryPostListView(ListView):
     def get_queryset(self):
         category = get_object_or_404(Category, name=self.kwargs.get('category'))
         return ClassRoot.objects.filter(category=category).order_by('-date_posted')
+
 
 class ClassTypeListView(ListView):
     model = ClassRoot
@@ -465,3 +504,24 @@ def validate_video_call(request):
     if not data['is_started']:
         messages.success(request, f'The One on One class has not started yet, or the instructor has ended the class. If something went wrong, please contact admin@nxtklass.com')
     return JsonResponse(data)
+
+
+def add_following(request):
+    user_username = request.GET.get('user_username', None)
+    user_to_follow = request.GET.get('user_to_follow', None)
+    current_user_object = get_object_or_404(User, username=user_username)
+    user_to_follow_object = get_object_or_404(User, username=user_to_follow)
+    following_users = [i.user_being_followed for i in
+                       FollowingList.objects.filter(user_doing_following=current_user_object)]
+    if user_to_follow_object in following_users:
+        data = {
+            'done': True
+        }
+        return JsonResponse(data)
+    else:
+        add_following_value = FollowingList(user_doing_following=current_user_object, user_being_followed=user_to_follow_object)
+        add_following_value.save()
+        data = {
+            'done': True
+        }
+        return JsonResponse(data)

@@ -27,6 +27,17 @@
       </div>
     </div>
     <div>
+        {% if user.is_authenticated %}
+            {% if is_following %}
+                <button id="button_do_nothing" class="btn btn-primary">You are Following this Instructor</button>
+            {% else %}
+                <button id="button_follow" class="btn btn-secondary">Follow This Instructor</button>
+            {% endif %}
+        {% else %}
+            <a class="mr-2" href="{% url 'login' %}?next={{request.path}}">Login to Follow this Instructor</a>
+        {% endif %}
+    </div>
+    <div>
         <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'user-review' page_user.username %}">Instructor Reviews</a>
         {% if user.is_authenticated %}
             <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'create-review' page_user.username %}">Write a review for this Instructor</a>
@@ -79,4 +90,39 @@
             <a class="btn btn-outline-dark mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
         {% endif %}
     {% endif %}
+
+    <script>
+    var page_user_username = "{{ page_user.username }}";
+    var user_logged_in_var = "{{ user_logged_in }}";
+    var user_is_following = "{{ is_following }}";
+
+    console.log(user_logged_in_var);
+    console.log(user_is_following);
+    if (user_logged_in_var == "True" && user_is_following == "False") {
+        console.log("logged in and not following");
+        var user_username = "{{ user.username }}";
+
+        $("#button_follow").click(function () {
+          console.log("calling ajax");
+          $.ajax({
+            url: '{% url "add_following" %}',
+            data: {
+              'user_username': user_username,
+              'user_to_follow': page_user_username
+            },
+            dataType: 'json',
+            success: function (data) {
+              console.log("followed");
+              // redirect
+              console.log('reload page');
+              window.location.reload();
+            }
+          });
+
+        });
+    } else {
+        console.log("not logged in or following");
+    }
+
+    </script>
 {% endblock content %}

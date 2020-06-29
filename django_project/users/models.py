@@ -66,3 +66,11 @@ class SignupInstructorList(models.Model):
         self.user_username = self.user_requesting.username
         super().save(*args, **kwargs)
 
+
+class FollowingList(models.Model):
+    user_doing_following = models.ForeignKey(User, related_name='user_doing_following', on_delete=models.CASCADE)
+    user_being_followed = models.ForeignKey(User, related_name='user_being_followed', on_delete=models.CASCADE)
+    date_followed = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f'{self.user_doing_following.username} is following {self.user_being_followed.username}'
