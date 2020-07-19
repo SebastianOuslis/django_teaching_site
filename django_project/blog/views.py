@@ -96,6 +96,25 @@ class FollowingListView(LoginRequiredMixin, ListView):
     def handle_no_permission(self):
         return redirect('home')
 
+class FollowingUsersView(LoginRequiredMixin, ListView):
+    model = Profile
+    template_name = 'blog/following_users.html'
+    context_object_name = 'users_following'
+    paginate_by = 5
+
+    def get_queryset(self):
+        current_user = self.request.user
+        following_users = [i.user_being_followed for i in FollowingList.objects.filter(user_doing_following=current_user)]
+        print(following_users)
+        qs1 = Profile.objects.filter(user=current_user)
+        for following_user in following_users:
+            qs2 = Profile.objects.filter(user=following_user)
+            qs1 = qs1.union(qs2)
+        return qs1
+
+    def handle_no_permission(self):
+        return redirect('home')
+
 
 class CategoryPostListView(ListView):
     model = ClassRoot

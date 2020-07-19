@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (
-    PostDetailView, PostListView, PostCreateView, PostUpdateView, PostDeleteView, UserPostListView, CategoryPostListView, ReviewCreateView, UserReviewList, VideoView_payed, VideoView_free, TextChatView, ClassTypeListView, ClassVideoView, PostSalesView, OneOnOneVideoAgora, FollowingListView
+    PostDetailView, PostListView, PostCreateView, PostUpdateView, PostDeleteView, UserPostListView, CategoryPostListView, ReviewCreateView, UserReviewList, VideoView_payed, VideoView_free, TextChatView, ClassTypeListView, ClassVideoView, PostSalesView, OneOnOneVideoAgora, FollowingListView, FollowingUsersView
     )
 from .views import (
     set_video_call_start, set_video_call_end, validate_video_call, add_following
@@ -12,6 +12,7 @@ urlpatterns = [
     path('', PostListView.as_view(), name='blog-home'),
     path('user/<str:username>', UserPostListView.as_view(), name='user-posts'),
     path('following/', FollowingListView.as_view(), name='following'),
+    path('followingUsers/', FollowingUsersView.as_view(), name='following_users'),
     path('category/<str:category>', CategoryPostListView.as_view(), name='post-category'),
     path('classType/<str:type>', ClassTypeListView.as_view(), name='class-type'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),

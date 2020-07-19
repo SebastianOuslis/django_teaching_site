@@ -2,6 +2,9 @@
 {% block content%}
 
     <h1 class="mb-3">{{ current_user.profile.full_name }} Classes Following ({{ page_obj.paginator.count}})</h1>
+    <div>
+        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'following_users' %}">Instructors Following</a>
+    </div>
     {% for class in classes %}
         <article class="media content-section">
           <img class="rounded-circle article-img" src="{{ class.author.profile.image.url }}">

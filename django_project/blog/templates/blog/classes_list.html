@@ -1,5 +1,10 @@
 {% extends "blog/base.html" %}
 {% block content%}
+    {% if user.is_authenticated %}
+    <div>
+        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'following' %}">Classes Following</a>
+    </div>
+    {% endif %}
     {% for class in classes %}
         <article class="media content-section">
           <img class="rounded-circle article-img" src="{{ class.author.profile.image.url }}">

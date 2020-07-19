@@ -20,15 +20,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="708304ce-202a-47a7-90dd-97f8b5275e00" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/django_project/blog/templates/blog/following_posts.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/django_project/blog/templates/blog/following_users.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/django_project/blog/templates/blog/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/blog/templates/blog/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/django_project/blog/templates/blog/newhome.html" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/blog/templates/blog/newhome.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/django_project/blog/templates/blog/user_posts.html" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/blog/templates/blog/user_posts.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_project/blog/templates/blog/classes_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/blog/templates/blog/classes_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_project/blog/templates/blog/following_posts.html" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/blog/templates/blog/following_posts.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/django_project/blog/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/blog/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/django_project/blog/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/blog/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/django_project/users/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/users/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/django_project/users/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project/users/models.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,10 +106,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="755" y="28" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1536.824@0.0.1536.824" timestamp="1588949656857" />
-    <state x="478" y="147" width="741" height="530" key="find.popup" timestamp="1592932306640">
+    <state x="478" y="147" width="741" height="530" key="find.popup" timestamp="1595171201205">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="478" y="147" width="741" height="530" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1592932306640" />
+    <state x="478" y="147" width="741" height="530" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1595171201205" />
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1590955721579">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
