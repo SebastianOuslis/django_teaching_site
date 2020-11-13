@@ -183,5 +183,5 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'nxtklass@gmail.com'
 EMAIL_HOST_PASSWORD = 'sonocozos-323!'
 
-STRIPE_SECRET_KEY = 'sk_live_kIqmNhjI0wvAiw0JgIT0nCIZ001I0E5PQb'
+STRIPE_SECRET_KEY = 'no'
 STRIPE_PUBLISHABLE_KEY = 'pk_live_HrfkerVzbyqifiJC1VxKx97j00reX3Dzjs'
